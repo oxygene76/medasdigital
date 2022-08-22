@@ -1,11 +1,11 @@
 accounts:
   - name: alice
-    coins: ["20000token", "200000000stake"]
+    coins: ["200000000umedas"]
   - name: bob
-    coins: ["10000token", "100000000stake"]
+    coins: ["100000000umedas"]
 validator:
   name: alice
-  staked: "100000000stake"
+  staked: "100000000umedas"
 client:
   openapi:
     path: "docs/static/openapi.yml"
@@ -13,4 +13,20 @@ client:
     path: "vue/src/store"
 faucet:
   name: bob
-  coins: ["5token", "100000stake"]
+  coins: ["100000umedas"]
+genesis:
+  chain_id: "medasdigital-test"
+  app_state:
+    staking:
+      params:
+        bond_denom: "umedas"
+    mint:
+      minter: 
+        inflation: "0.530000000000000000" 
+      params: 
+        blocks_per_year: "5256000"
+        goal_bonded: "0.670000000000000000"
+        inflation_max: "0.530000000000000000"
+        inflation_min: "0.410000000000000000"
+        inflation_rate_change: "0.240000000000000000" 
+        mint_denom: "umedas"    
