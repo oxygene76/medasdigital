@@ -65,6 +65,20 @@
           "pub_key": null,
           "account_number": "0",
           "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "medas1epe7gywrtvq6gmm437zdtlcd4fmq95u5drsgsm",
+          "pub_key": null,
+          "account_number": "0",
+          "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "medas1cddn8c0zwl87pvuwe6pll67yv4eqhctade5j45",
+          "pub_key": null,
+          "account_number": "0",
+          "sequence": "0"
         }
       ]
     },
@@ -115,6 +129,24 @@
         },
         {
           "address": "medas1kadydkurlcrevrqkk4wpgfq5gc8rfh5emr0e9x",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "1000000000"
+            }
+          ]
+        },
+        {
+          "address": "medas1cddn8c0zwl87pvuwe6pll67yv4eqhctade5j45",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "1000000000"
+            }
+          ]
+        },
+        {
+          "address": "medas1epe7gywrtvq6gmm437zdtlcd4fmq95u5drsgsm",
           "coins": [
             {
               "denom": "umedas",
