@@ -5,7 +5,7 @@
   "consensus_params": {
     "block": {
       "max_bytes": "22020096",
-      "max_gas": "-1",
+      "max_gas": "600000000",
       "time_iota_ms": "1000"
     },
     "evidence": {
@@ -44,6 +44,27 @@
           "pub_key": null,
           "account_number": "0",
           "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "medas1jhr9fewck8yr4vrzckagcx8dcqusmvhwe2z2ly",
+          "pub_key": null,
+          "account_number": "0",
+          "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "medas1kadydkurlcrevrqkk4wpgfq5gc8rfh5emr0e9x",
+          "pub_key": null,
+          "account_number": "0",
+          "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "medas1tjgm5kuh27827c3hn7kw69q7q8xjqnxgwm3syp",
+          "pub_key": null,
+          "account_number": "0",
+          "sequence": "0"
         }
       ]
     },
@@ -61,7 +82,7 @@
           "coins": [
             {
               "denom": "umedas",
-              "amount": "200000000"
+              "amount": "2000000000"
             }
           ]
         },
@@ -70,7 +91,34 @@
           "coins": [
             {
               "denom": "umedas",
-              "amount": "100000000"
+              "amount": "1000000000"
+            }
+          ]
+        },
+        {
+          "address": "medas1tjgm5kuh27827c3hn7kw69q7q8xjqnxgwm3syp",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "1000000000"
+            }
+          ]
+        },
+        {
+          "address": "medas1jhr9fewck8yr4vrzckagcx8dcqusmvhwe2z2ly",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "1000000000"
+            }
+          ]
+        },
+        {
+          "address": "medas1kadydkurlcrevrqkk4wpgfq5gc8rfh5emr0e9x",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "1000000000"
             }
           ]
         }
@@ -85,7 +133,7 @@
     "crisis": {
       "constant_fee": {
         "amount": "1000",
-        "denom": "stake"
+        "denom": "umedas"
       }
     },
     "distribution": {
@@ -184,7 +232,7 @@
         "min_deposit": [
           {
             "amount": "10000000",
-            "denom": "stake"
+            "denom": "umedas"
           }
         ]
       },
@@ -240,14 +288,14 @@
     "mint": {
       "minter": {
         "annual_provisions": "0.000000000000000000",
-        "inflation": "0.530000000000000000"
+        "inflation": "0.200000000000000000"
       },
       "params": {
-        "blocks_per_year": "5256000",
+        "blocks_per_year": "6311520",
         "goal_bonded": "0.670000000000000000",
-        "inflation_max": "0.530000000000000000",
-        "inflation_min": "0.410000000000000000",
-        "inflation_rate_change": "0.240000000000000000",
+        "inflation_max": "0.200000000000000000",
+        "inflation_min": "0.070000000000000000",
+        "inflation_rate_change": "0.050000000000000000",
         "mint_denom": "umedas"
       }
     },
