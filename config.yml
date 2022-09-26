@@ -1,18 +1,18 @@
 accounts:
-  - name: alice
-    coins: ["200000000umedas"]
-  - name: bob
-    coins: ["100000000umedas"]
+  - name: Erik
+    coins: ["2000000000umedas"]
+  - name: Julia
+    coins: ["1000000000umedas"]
 validator:
-  name: alice
-  staked: "100000000umedas"
+  name: Erik
+  staked: "50000000u0medas"
 client:
   openapi:
     path: "docs/static/openapi.yml"
   vuex:
     path: "vue/src/store"
 faucet:
-  name: bob
+  name: Julia
   coins: ["100000umedas"]
 genesis:
   chain_id: "medasdigital-test"
