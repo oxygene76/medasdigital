@@ -3,9 +3,18 @@ accounts:
     coins: ["2000000000umedas"]
   - name: Julia
     coins: ["1000000000umedas"]
+  - name: Eike
+    coins: ["1000000000umedas"]
+  - name: Neptun 
+    coins: ["1000000000umedas"]
+  - name: Hans
+    coins: ["1000000000umedas"]
+  - name: Ilse
+    coins: ["1000000000umedas"]
+
 validator:
   name: Erik
-  staked: "50000000u0medas"
+  staked: "10000000umedas"
 client:
   openapi:
     path: "docs/static/openapi.yml"
