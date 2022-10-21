@@ -1,0 +1,14 @@
+syntax = "proto3";
+package medasdigital.medasdigital;
+
+import "gogoproto/gogo.proto";
+import "medasdigital/medasdigital/params.proto";
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "medasdigital/x/medasdigital/types";
+
+// GenesisState defines the medasdigital module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+  // this line is used by starport scaffolding # genesis/proto/state
+}
