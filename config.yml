@@ -1,19 +1,44 @@
-version: 1
+build:
+    ldflags: [ "-X main.Env=prod", "-X main.Version=1.0.0" ]
+
 accounts:
-  - name: alice
-    coins: ["20000token", "200000000stake"]
-  - name: bob
-    coins: ["10000token", "100000000stake"]
-validators:
-  - name: alice
-    bonded: "100000000stake"
+  - name: Medas 
+    coins: ["100000000000000umedas"]
+  - name: Eike 
+    coins: ["50000000000000umedas"]
+  - name: Erik
+    coins: ["5000000000000umedas"]
+  - name: Julia 
+    coins: ["5000000000000umedas"]
+  - name: Hans
+    coins: ["5000000000000umedas"]
+  - name: Ilse
+    coins: ["5000000000000umedas"]
+
+validator:
+  name: Eike 
+  staked: "40000000000000umedas"
 client:
   openapi:
     path: "docs/static/openapi.yml"
-  typescript:
-    path: "ts-client"
   vuex:
     path: "vue/src/store"
 faucet:
-  name: bob
-  coins: ["5token", "100000stake"]
+  name: Erik
+  coins: ["100000umedas"]
+genesis:
+  chain_id: "medasdigital-1"
+  app_state:
+    staking:
+      params:
+        bond_denom: "umedas"
+    mint:
+      minter: 
+        inflation: "0.250000000000000000" 
+      params: 
+        blocks_per_year: "5256000"
+        goal_bonded: "0.670000000000000000"
+        inflation_max: "0.250000000000000000"
+        inflation_min: "0.050000000000000000"
+        inflation_rate_change: "0.240000000000000000" 
+        mint_denom: "umedas"    
