@@ -100,9 +100,9 @@ import (
 
 	"github.com/oxygene/medasdigital/docs"
 
-	medasdigitalmodule "github.com/oxygene/medasdigital/x/medasdigital"
-	medasdigitalmodulekeeper "github.com/oxygene/medasdigital/x/medasdigital/keeper"
-	medasdigitalmoduletypes "github.com/oxygene/medasdigital/x/medasdigital/types"
+	medasdigitalmodule "github.com/oxygene76/medasdigital/x/medasdigital"
+	medasdigitalmodulekeeper "github.com/oxygene76/medasdigital/x/medasdigital/keeper"
+	medasdigitalmoduletypes "github.com/oxygene76/medasdigital/x/medasdigital/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 )
 
