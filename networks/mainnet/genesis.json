@@ -210,69 +210,6 @@
             "delegated_vesting": [],
             "end_time": "1704063599"
           }
-        },
-	{
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "medas1z49n7la5m6la7re70lrg3z43nx792gxsp9hn6x",
-          "pub_key": null,
-          "account_number": "0",
-          "sequence": "0"
-        },
-        {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "medas1rrzqzxl2tfr3dgyr275u7n69crj0r966493yut",
-          "pub_key": null,
-          "account_number": "0",
-          "sequence": "0"
-        },
-        {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "medas1jhr9fewck8yr4vrzckagcx8dcqusmvhwe2z2ly",
-          "pub_key": null,
-          "account_number": "0",
-          "sequence": "0"
-        },
-        {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "medas1kadydkurlcrevrqkk4wpgfq5gc8rfh5emr0e9x",
-          "pub_key": null,
-          "account_number": "0",
-          "sequence": "0"
-        },
-        {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "medas1tjgm5kuh27827c3hn7kw69q7q8xjqnxgwm3syp",
-          "pub_key": null,
-          "account_number": "0",
-          "sequence": "0"
-        },
-	{
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "medas1epe7gywrtvq6gmm437zdtlcd4fmq95u5drsgsm",
-          "pub_key": null,
-          "account_number": "0",
-          "sequence": "0"
-        },
-        {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "medas1cddn8c0zwl87pvuwe6pll67yv4eqhctade5j45",
-          "pub_key": null,
-          "account_number": "0",
-          "sequence": "0"
-        },
-        {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "medas1cg8u9nk6amf3fphtu9kppq7dgrlx9zqx4wezu3",
-          "pub_key": null,
-          "account_number": "0",
-          "sequence": "0"
-        },
-        {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "medas1sluwnsvvdg4dydkkg3hypy00wavpeqk7x06tvd",
-          "pub_key": null,
-          "account_number": "0",
-          "sequence": "0"
         }
       ]
     },
