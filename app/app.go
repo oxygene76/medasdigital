@@ -104,6 +104,12 @@ import (
 	tmos "github.com/tendermint/tendermint/libs/os"
 	dbm "github.com/tendermint/tm-db"
 
+
+	wasmappparams "github.com/CosmWasm/wasmd/app/params"
+	"github.com/CosmWasm/wasmd/x/wasm"
+	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
+	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
+
 	medasdigitalmodule "medasdigital/x/medasdigital"
 	medasdigitalmodulekeeper "medasdigital/x/medasdigital/keeper"
 	medasdigitalmoduletypes "medasdigital/x/medasdigital/types"
@@ -116,9 +122,8 @@ import (
 const (
 	AccountAddressPrefix = "medas"
 	Name                 = "medasdigital"
+	v1UpgraName	     = "medaswasm"
 )
-
-// this line is used by starport scaffolding # stargate/wasm/app/enabledProposals
 
 func getGovProposalHandlers() []govclient.ProposalHandler {
 	var govProposalHandlers []govclient.ProposalHandler
