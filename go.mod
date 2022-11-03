@@ -3,6 +3,8 @@ module medasdigital
 go 1.18
 
 require (
+	
+	github.com/CosmWasm/wasmd v0.29.1
 	github.com/cosmos/cosmos-sdk v0.46.3
 	github.com/cosmos/ibc-go/v5 v5.0.0
 	github.com/gogo/protobuf v1.3.3
