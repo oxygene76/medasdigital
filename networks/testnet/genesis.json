@@ -48,50 +48,10 @@
             ],
             "delegated_free": [],
             "delegated_vesting": [],
-            "end_time": "1704063599"
+            "end_time": "1798757999"
           }
         },
-	   {
-          "@type": "/cosmos.vesting.v1beta1.DelayedVestingAccount",
-          "base_vesting_account": {
-            "base_account": {
-              "address": "medas1jhr9fewck8yr4vrzckagcx8dcqusmvhwe2z2ly",
-              "pub_key": null,
-              "account_number": "0",
-              "sequence": "0"
-            },
-            "original_vesting": [
-              {
-                "denom": "umedas",
-                "amount": "9990000000000"
-              }
-            ],
-            "delegated_free": [],
-            "delegated_vesting": [],
-            "end_time": "1704063599"
-          }
-        },
-	   {
-          "@type": "/cosmos.vesting.v1beta1.DelayedVestingAccount",
-          "base_vesting_account": {
-            "base_account": {
-              "address": "medas1kadydkurlcrevrqkk4wpgfq5gc8rfh5emr0e9x",
-              "pub_key": null,
-              "account_number": "0",
-              "sequence": "0"
-            },
-            "original_vesting": [
-              {
-                "denom": "umedas",
-                "amount": "9990000000000"
-              }
-            ],
-            "delegated_free": [],
-            "delegated_vesting": [],
-            "end_time": "1704063599"
-          }
-        },
-	   {
+	  {
           "@type": "/cosmos.vesting.v1beta1.DelayedVestingAccount",
           "base_vesting_account": {
             "base_account": {
@@ -108,7 +68,7 @@
             ],
             "delegated_free": [],
             "delegated_vesting": [],
-            "end_time": "1704063599"
+            "end_time": "1798757999"
           }
         },
 	   {
@@ -128,7 +88,7 @@
             ],
             "delegated_free": [],
             "delegated_vesting": [],
-            "end_time": "1704063599"
+            "end_time": "1798757999"
           }
         },
 	  {
@@ -148,7 +108,7 @@
             ],
             "delegated_free": [],
             "delegated_vesting": [],
-            "end_time": "1704063599"
+            "end_time": "1798757999"
           }
         },
 	  {
@@ -168,27 +128,7 @@
             ],
             "delegated_free": [],
             "delegated_vesting": [],
-            "end_time": "1704063599"
-          }
-        },
-	  {
-          "@type": "/cosmos.vesting.v1beta1.DelayedVestingAccount",
-          "base_vesting_account": {
-            "base_account": {
-              "address": "medas1kvvwcw8puzgqkmf8knk8tscghmvh2v7fcehwx3",
-              "pub_key": null,
-              "account_number": "0",
-              "sequence": "0"
-            },
-            "original_vesting": [
-              {
-                "denom": "umedas",
-                "amount": "9990000000000"
-              }
-            ],
-            "delegated_free": [],
-            "delegated_vesting": [],
-            "end_time": "1704063599"
+            "end_time": "1798757999"
           }
         },
 	  {
@@ -208,7 +148,7 @@
             ],
             "delegated_free": [],
             "delegated_vesting": [],
-            "end_time": "1704063599"
+            "end_time": "1798757999"
           }
         },
 	  {
@@ -228,7 +168,7 @@
             ],
             "delegated_free": [],
             "delegated_vesting": [],
-            "end_time": "1704063599"
+            "end_time": "1798757999"
           }
         },
 	  {
@@ -248,7 +188,7 @@
             ],
             "delegated_free": [],
             "delegated_vesting": [],
-            "end_time": "1704063599"
+            "end_time": "1798757999"
           }
         },
 	 {
@@ -268,7 +208,7 @@
             ],
             "delegated_free": [],
             "delegated_vesting": [],
-            "end_time": "1704063599"
+            "end_time": "1798757999"
           }
         },
         {
@@ -277,7 +217,22 @@
           "pub_key": null,
           "account_number": "0",
           "sequence": "0"
+        },
+	 {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "medas1jhr9fewck8yr4vrzckagcx8dcqusmvhwe2z2ly",
+          "pub_key": null,
+          "account_number": "0",
+          "sequence": "0"
+        },
+	 {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "medas1kadydkurlcrevrqkk4wpgfq5gc8rfh5emr0e9x",
+          "pub_key": null,
+          "account_number": "0",
+          "sequence": "0"
         }
+	      
       ]
     },
     "authz": {
@@ -294,7 +249,7 @@
           "coins": [
             {
               "denom": "umedas",
-              "amount": "10000000000000"
+              "amount": "66000000000000"
             }
           ]
         },
@@ -315,7 +270,26 @@
               "amount": "10000000000000"
             }
           ]
+        },
+	{
+          "address": "medas1jhr9fewck8yr4vrzckagcx8dcqusmvhwe2z2ly",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "120000000000000"
+            }
+          ]
+        },
+	{
+          "address": "medas1kadydkurlcrevrqkk4wpgfq5gc8rfh5emr0e9x",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "42000000000000"
+            }
+          ]
         }
+	 
       ],
       "supply": [],
       "denom_metadata": []
