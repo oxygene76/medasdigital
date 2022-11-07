@@ -43,7 +43,7 @@
             "original_vesting": [
               {
                 "denom": "umedas",
-                "amount": "9990000000000"
+                "amount": "600000000000"
               }
             ],
             "delegated_free": [],
@@ -63,7 +63,7 @@
             "original_vesting": [
               {
                 "denom": "umedas",
-                "amount": "9990000000000"
+                "amount": "600000000000"
               }
             ],
             "delegated_free": [],
@@ -83,7 +83,7 @@
             "original_vesting": [
               {
                 "denom": "umedas",
-                "amount": "9990000000000"
+                "amount": "600000000000"
               }
             ],
             "delegated_free": [],
@@ -103,7 +103,7 @@
             "original_vesting": [
               {
                 "denom": "umedas",
-                "amount": "9990000000000"
+                "amount": "600000000000"
               }
             ],
             "delegated_free": [],
@@ -123,7 +123,7 @@
             "original_vesting": [
               {
                 "denom": "umedas",
-                "amount": "9990000000000"
+                "amount": "600000000000"
               }
             ],
             "delegated_free": [],
@@ -143,7 +143,7 @@
             "original_vesting": [
               {
                 "denom": "umedas",
-                "amount": "9990000000000"
+                "amount": "600000000000"
               }
             ],
             "delegated_free": [],
@@ -163,7 +163,7 @@
             "original_vesting": [
               {
                 "denom": "umedas",
-                "amount": "9990000000000"
+                "amount": "600000000000"
               }
             ],
             "delegated_free": [],
@@ -183,7 +183,7 @@
             "original_vesting": [
               {
                 "denom": "umedas",
-                "amount": "9990000000000"
+                "amount": "600000000000"
               }
             ],
             "delegated_free": [],
@@ -203,7 +203,27 @@
             "original_vesting": [
               {
                 "denom": "umedas",
-                "amount": "9900000000000"
+                "amount": "600000000000"
+              }
+            ],
+            "delegated_free": [],
+            "delegated_vesting": [],
+            "end_time": "1798757999"
+          }
+        },
+	   {
+          "@type": "/cosmos.vesting.v1beta1.DelayedVestingAccount",
+          "base_vesting_account": {
+            "base_account": {
+              "address": "medas1kvvwcw8puzgqkmf8knk8tscghmvh2v7fcehwx3",
+              "pub_key": null,
+              "account_number": "0",
+              "sequence": "0"
+            },
+            "original_vesting": [
+              {
+                "denom": "umedas",
+                "amount": "600000000000"
               }
             ],
             "delegated_free": [],
@@ -258,7 +278,7 @@
           "coins": [
             {
               "denom": "umedas",
-              "amount": "10000000000000"
+              "amount": "6000000000000"
             }
           ]
         },
@@ -267,7 +287,7 @@
           "coins": [
             {
               "denom": "umedas",
-              "amount": "10000000000000"
+              "amount": "6000000000000"
             }
           ]
         },
@@ -285,7 +305,79 @@
           "coins": [
             {
               "denom": "umedas",
-              "amount": "42000000000000"
+              "amount": "54000000000000"
+            }
+          ]
+        },
+	{
+          "address": "medas14dfk2dc4ktqqw8rk4ak0raz9gpjje4t208u72v",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "6000000000000"
+            }
+          ]
+        },
+	{
+          "address": "medas1kr8ssf53gwjd26qhh0pf96ahqaav056wtfa8h7",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "6000000000000"
+            }
+          ]
+        },
+	{
+          "address": "medas12252pwfkf82wmvptnl359ez27nuw90srkycdwt",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "6000000000000"
+            }
+          ]
+        },
+	{
+          "address": "medas1rgq0d9d7kqnm33fmldhm38lh6577zchzrax860",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "6000000000000"
+            }
+          ]
+        },
+	{
+          "address": "medas128wn5p8fvmlyyk4hdyuf2t9p0gzut656867t60",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "6000000000000"
+            }
+          ]
+        },
+	{
+          "address": "medas1kvvwcw8puzgqkmf8knk8tscghmvh2v7fcehwx3",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "6000000000000"
+            }
+          ]
+        },
+	{
+          "address": "medas1p0tzpucw3akwchzt04ahej0wd4awwm2jad5vgl",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "6000000000000"
+            }
+          ]
+        },
+	{
+          "address": "medas1ja9adsspcz4awax7slj3u8kpzuyygl0dl8dxta",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "6000000000000"
             }
           ]
         }
@@ -357,7 +449,7 @@
                 },
                 "value": {
                   "denom": "umedas",
-                  "amount": "10000000000000"
+                  "amount": "60000000000000"
                 }
               }
             ],
