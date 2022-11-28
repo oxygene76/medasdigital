@@ -211,7 +211,27 @@
             "end_time": "1798757999"
           }
         },
-	   {
+	{
+	               "@type": "/cosmos.vesting.v1beta1.DelayedVestingAccount",
+	                 "base_vesting_account": {
+		              "base_account": {
+		                   "address": "medas1967ey9t0wjdtnk9gltq0wjy8m57d9rrs6v90yu",
+	                   "pub_key": null,
+              "account_number": "0",
+              "sequence": "0"
+            },
+            "original_vesting": [
+	              {
+		                  "denom": "umedas",
+		                    "amount": "200000000000"
+		                }
+	                ],
+            "delegated_free": [],
+            "delegated_vesting": [],
+            "end_time": "1798757999"
+          }
+        },
+	{
           "@type": "/cosmos.vesting.v1beta1.DelayedVestingAccount",
           "base_vesting_account": {
             "base_account": {
@@ -275,6 +295,15 @@
         },
         {
           "address": "medas17lee6fy4lymdgtzz4gf5u2z935vysd63ht5zjk",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "2000000000000"
+            }
+          ]
+        },
+        {
+          "address": "medas1967ey9t0wjdtnk9gltq0wjy8m57d9rrs6v90yu",
           "coins": [
             {
               "denom": "umedas",
