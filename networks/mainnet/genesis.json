@@ -265,7 +265,14 @@
           "account_number": "0",
           "sequence": "0"
         },
-	 {
+          {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "medas1cg8u9nk6amf3fphtu9kppq7dgrlx9zqx4wezu3",
+          "pub_key": null,
+          "account_number": "0",
+          "sequence": "0"
+        },
+	{
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
           "address": "medas1kadydkurlcrevrqkk4wpgfq5gc8rfh5emr0e9x",
           "pub_key": null,
@@ -398,6 +405,15 @@
             {
               "denom": "umedas",
               "amount": "2000000000000"
+            }
+          ]
+        },
+         {
+          "address": "medas1cg8u9nk6amf3fphtu9kppq7dgrlx9zqx4wezu3",
+          "coins": [
+            {
+              "denom": "umedas",
+              "amount": "120000000000000"
             }
           ]
         },
