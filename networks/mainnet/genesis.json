@@ -274,7 +274,7 @@
         },
 	{
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "medas1kadydkurlcrevrqkk4wpgfq5gc8rfh5emr0e9x",
+          "address": "medas14wa8gkl0u36jmr7qd69w045xye2m0vf9vdzxdv",
           "pub_key": null,
           "account_number": "0",
           "sequence": "0"
@@ -337,7 +337,7 @@
           ]
         },
 	{
-          "address": "medas1kadydkurlcrevrqkk4wpgfq5gc8rfh5emr0e9x",
+          "address": "medas14wa8gkl0u36jmr7qd69w045xye2m0vf9vdzxdv",
           "coins": [
             {
               "denom": "umedas",
