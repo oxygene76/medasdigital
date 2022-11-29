@@ -1,6 +1,6 @@
 {
   "genesis_time": "2022-10-27T07:19:11.201721794Z",
-  "chain_id": "medasdigital-test",
+  "chain_id": "medasdigital-1",
   "initial_height": "1",
   "consensus_params": {
     "block": {
