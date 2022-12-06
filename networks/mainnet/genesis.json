@@ -63,7 +63,7 @@
             "original_vesting": [
               {
                 "denom": "umedas",
-                "amount": "100000000000"
+                "amount": "900000000000"
               }
             ],
             "delegated_free": [],
@@ -163,7 +163,7 @@
             "original_vesting": [
               {
                 "denom": "umedas",
-                "amount": "200000000000"
+                "amount": "1900000000000"
               }
             ],
             "delegated_free": [],
@@ -203,7 +203,7 @@
             "original_vesting": [
               {
                 "denom": "umedas",
-                "amount": "200000000000"
+                "amount": "1900000000000"
               }
             ],
             "delegated_free": [],
@@ -223,7 +223,7 @@
             "original_vesting": [
               {
                 "denom": "umedas",
-                "amount": "200000000000"
+                "amount": "1900000000000"
               }
             ],
             "delegated_free": [],
@@ -243,7 +243,7 @@
             "original_vesting": [
               {
                 "denom": "umedas",
-                "amount": "200000000000"
+                "amount": "1900000000000"
               }
             ],
             "delegated_free": [],
