@@ -546,19 +546,6 @@ export default {
 		},
 		
 		
-		async sendMsgUpdateGroupAdmin({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const client=await initClient(rootGetters)
-				const result = await client.CosmosGroupV1.tx.sendMsgUpdateGroupAdmin({ value, fee: {amount: fee, gas: "200000"}, memo })
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgUpdateGroupAdmin:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgUpdateGroupAdmin:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
 		async sendMsgCreateGroupWithPolicy({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
@@ -572,16 +559,29 @@ export default {
 				}
 			}
 		},
-		async sendMsgExec({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgCreateGroupPolicy({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
-				const result = await client.CosmosGroupV1.tx.sendMsgExec({ value, fee: {amount: fee, gas: "200000"}, memo })
+				const result = await client.CosmosGroupV1.tx.sendMsgCreateGroupPolicy({ value, fee: {amount: fee, gas: "200000"}, memo })
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgExec:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgCreateGroupPolicy:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgExec:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgCreateGroupPolicy:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgUpdateGroupMetadata({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const result = await client.CosmosGroupV1.tx.sendMsgUpdateGroupMetadata({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgUpdateGroupMetadata:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgUpdateGroupMetadata:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -595,19 +595,6 @@ export default {
 					throw new Error('TxClient:MsgUpdateGroupPolicyDecisionPolicy:Init Could not initialize signing client. Wallet is required.')
 				}else{
 					throw new Error('TxClient:MsgUpdateGroupPolicyDecisionPolicy:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
-		async sendMsgUpdateGroupPolicyAdmin({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const client=await initClient(rootGetters)
-				const result = await client.CosmosGroupV1.tx.sendMsgUpdateGroupPolicyAdmin({ value, fee: {amount: fee, gas: "200000"}, memo })
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgUpdateGroupPolicyAdmin:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgUpdateGroupPolicyAdmin:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -637,29 +624,42 @@ export default {
 				}
 			}
 		},
-		async sendMsgLeaveGroup({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgExec({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
-				const result = await client.CosmosGroupV1.tx.sendMsgLeaveGroup({ value, fee: {amount: fee, gas: "200000"}, memo })
+				const result = await client.CosmosGroupV1.tx.sendMsgExec({ value, fee: {amount: fee, gas: "200000"}, memo })
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgLeaveGroup:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgExec:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgLeaveGroup:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgExec:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
-		async sendMsgUpdateGroupMetadata({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgUpdateGroupAdmin({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
-				const result = await client.CosmosGroupV1.tx.sendMsgUpdateGroupMetadata({ value, fee: {amount: fee, gas: "200000"}, memo })
+				const result = await client.CosmosGroupV1.tx.sendMsgUpdateGroupAdmin({ value, fee: {amount: fee, gas: "200000"}, memo })
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgUpdateGroupMetadata:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgUpdateGroupAdmin:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgUpdateGroupMetadata:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgUpdateGroupAdmin:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgUpdateGroupPolicyMetadata({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const result = await client.CosmosGroupV1.tx.sendMsgUpdateGroupPolicyMetadata({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgUpdateGroupPolicyMetadata:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgUpdateGroupPolicyMetadata:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -689,29 +689,16 @@ export default {
 				}
 			}
 		},
-		async sendMsgCreateGroupPolicy({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgUpdateGroupPolicyAdmin({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
-				const result = await client.CosmosGroupV1.tx.sendMsgCreateGroupPolicy({ value, fee: {amount: fee, gas: "200000"}, memo })
+				const result = await client.CosmosGroupV1.tx.sendMsgUpdateGroupPolicyAdmin({ value, fee: {amount: fee, gas: "200000"}, memo })
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateGroupPolicy:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgUpdateGroupPolicyAdmin:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgCreateGroupPolicy:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
-		async sendMsgUpdateGroupPolicyMetadata({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const client=await initClient(rootGetters)
-				const result = await client.CosmosGroupV1.tx.sendMsgUpdateGroupPolicyMetadata({ value, fee: {amount: fee, gas: "200000"}, memo })
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgUpdateGroupPolicyMetadata:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgUpdateGroupPolicyMetadata:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgUpdateGroupPolicyAdmin:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -728,20 +715,20 @@ export default {
 				}
 			}
 		},
-		
-		async MsgUpdateGroupAdmin({ rootGetters }, { value }) {
+		async sendMsgLeaveGroup({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
-				const client=initClient(rootGetters)
-				const msg = await client.CosmosGroupV1.tx.msgUpdateGroupAdmin({value})
-				return msg
+				const client=await initClient(rootGetters)
+				const result = await client.CosmosGroupV1.tx.sendMsgLeaveGroup({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgUpdateGroupAdmin:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgUpdateGroupAdmin:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgLeaveGroup:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgLeaveGroup:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
+		
 		async MsgCreateGroupWithPolicy({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
@@ -755,16 +742,29 @@ export default {
 				}
 			}
 		},
-		async MsgExec({ rootGetters }, { value }) {
+		async MsgCreateGroupPolicy({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
-				const msg = await client.CosmosGroupV1.tx.msgExec({value})
+				const msg = await client.CosmosGroupV1.tx.msgCreateGroupPolicy({value})
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgExec:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgCreateGroupPolicy:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgExec:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgCreateGroupPolicy:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgUpdateGroupMetadata({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.CosmosGroupV1.tx.msgUpdateGroupMetadata({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgUpdateGroupMetadata:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgUpdateGroupMetadata:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -778,19 +778,6 @@ export default {
 					throw new Error('TxClient:MsgUpdateGroupPolicyDecisionPolicy:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgUpdateGroupPolicyDecisionPolicy:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgUpdateGroupPolicyAdmin({ rootGetters }, { value }) {
-			try {
-				const client=initClient(rootGetters)
-				const msg = await client.CosmosGroupV1.tx.msgUpdateGroupPolicyAdmin({value})
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgUpdateGroupPolicyAdmin:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgUpdateGroupPolicyAdmin:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -820,29 +807,42 @@ export default {
 				}
 			}
 		},
-		async MsgLeaveGroup({ rootGetters }, { value }) {
+		async MsgExec({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
-				const msg = await client.CosmosGroupV1.tx.msgLeaveGroup({value})
+				const msg = await client.CosmosGroupV1.tx.msgExec({value})
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgLeaveGroup:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgExec:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgLeaveGroup:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgExec:Create Could not create message: ' + e.message)
 				}
 			}
 		},
-		async MsgUpdateGroupMetadata({ rootGetters }, { value }) {
+		async MsgUpdateGroupAdmin({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
-				const msg = await client.CosmosGroupV1.tx.msgUpdateGroupMetadata({value})
+				const msg = await client.CosmosGroupV1.tx.msgUpdateGroupAdmin({value})
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgUpdateGroupMetadata:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgUpdateGroupAdmin:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgUpdateGroupMetadata:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgUpdateGroupAdmin:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgUpdateGroupPolicyMetadata({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.CosmosGroupV1.tx.msgUpdateGroupPolicyMetadata({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgUpdateGroupPolicyMetadata:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgUpdateGroupPolicyMetadata:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -872,29 +872,16 @@ export default {
 				}
 			}
 		},
-		async MsgCreateGroupPolicy({ rootGetters }, { value }) {
+		async MsgUpdateGroupPolicyAdmin({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
-				const msg = await client.CosmosGroupV1.tx.msgCreateGroupPolicy({value})
+				const msg = await client.CosmosGroupV1.tx.msgUpdateGroupPolicyAdmin({value})
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateGroupPolicy:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgUpdateGroupPolicyAdmin:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgCreateGroupPolicy:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgUpdateGroupPolicyMetadata({ rootGetters }, { value }) {
-			try {
-				const client=initClient(rootGetters)
-				const msg = await client.CosmosGroupV1.tx.msgUpdateGroupPolicyMetadata({value})
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgUpdateGroupPolicyMetadata:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgUpdateGroupPolicyMetadata:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgUpdateGroupPolicyAdmin:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -908,6 +895,19 @@ export default {
 					throw new Error('TxClient:MsgWithdrawProposal:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgWithdrawProposal:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgLeaveGroup({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.CosmosGroupV1.tx.msgLeaveGroup({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgLeaveGroup:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgLeaveGroup:Create Could not create message: ' + e.message)
 				}
 			}
 		},

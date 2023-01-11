@@ -208,16 +208,16 @@ export default {
 		},
 		
 		
-		async sendMsgRevoke({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgGrant({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
-				const result = await client.CosmosAuthzV1Beta1.tx.sendMsgRevoke({ value, fee: {amount: fee, gas: "200000"}, memo })
+				const result = await client.CosmosAuthzV1Beta1.tx.sendMsgGrant({ value, fee: {amount: fee, gas: "200000"}, memo })
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgRevoke:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgGrant:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgRevoke:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgGrant:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -234,30 +234,30 @@ export default {
 				}
 			}
 		},
-		async sendMsgGrant({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgRevoke({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
-				const result = await client.CosmosAuthzV1Beta1.tx.sendMsgGrant({ value, fee: {amount: fee, gas: "200000"}, memo })
+				const result = await client.CosmosAuthzV1Beta1.tx.sendMsgRevoke({ value, fee: {amount: fee, gas: "200000"}, memo })
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgGrant:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgRevoke:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgGrant:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgRevoke:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
 		
-		async MsgRevoke({ rootGetters }, { value }) {
+		async MsgGrant({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
-				const msg = await client.CosmosAuthzV1Beta1.tx.msgRevoke({value})
+				const msg = await client.CosmosAuthzV1Beta1.tx.msgGrant({value})
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgRevoke:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgGrant:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgRevoke:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgGrant:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -274,16 +274,16 @@ export default {
 				}
 			}
 		},
-		async MsgGrant({ rootGetters }, { value }) {
+		async MsgRevoke({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
-				const msg = await client.CosmosAuthzV1Beta1.tx.msgGrant({value})
+				const msg = await client.CosmosAuthzV1Beta1.tx.msgRevoke({value})
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgGrant:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgRevoke:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgGrant:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgRevoke:Create Could not create message: ' + e.message)
 				}
 			}
 		},
