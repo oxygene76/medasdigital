@@ -7,29 +7,23 @@ import { msgTypes } from './registry';
 import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
-import { MsgUpdateGroupAdmin } from "./types/cosmos/group/v1/tx";
 import { MsgCreateGroupWithPolicy } from "./types/cosmos/group/v1/tx";
-import { MsgExec } from "./types/cosmos/group/v1/tx";
+import { MsgCreateGroupPolicy } from "./types/cosmos/group/v1/tx";
+import { MsgUpdateGroupMetadata } from "./types/cosmos/group/v1/tx";
 import { MsgUpdateGroupPolicyDecisionPolicy } from "./types/cosmos/group/v1/tx";
-import { MsgUpdateGroupPolicyAdmin } from "./types/cosmos/group/v1/tx";
 import { MsgCreateGroup } from "./types/cosmos/group/v1/tx";
 import { MsgVote } from "./types/cosmos/group/v1/tx";
-import { MsgLeaveGroup } from "./types/cosmos/group/v1/tx";
-import { MsgUpdateGroupMetadata } from "./types/cosmos/group/v1/tx";
+import { MsgExec } from "./types/cosmos/group/v1/tx";
+import { MsgUpdateGroupAdmin } from "./types/cosmos/group/v1/tx";
+import { MsgUpdateGroupPolicyMetadata } from "./types/cosmos/group/v1/tx";
 import { MsgUpdateGroupMembers } from "./types/cosmos/group/v1/tx";
 import { MsgSubmitProposal } from "./types/cosmos/group/v1/tx";
-import { MsgCreateGroupPolicy } from "./types/cosmos/group/v1/tx";
-import { MsgUpdateGroupPolicyMetadata } from "./types/cosmos/group/v1/tx";
+import { MsgUpdateGroupPolicyAdmin } from "./types/cosmos/group/v1/tx";
 import { MsgWithdrawProposal } from "./types/cosmos/group/v1/tx";
+import { MsgLeaveGroup } from "./types/cosmos/group/v1/tx";
 
 
-export { MsgUpdateGroupAdmin, MsgCreateGroupWithPolicy, MsgExec, MsgUpdateGroupPolicyDecisionPolicy, MsgUpdateGroupPolicyAdmin, MsgCreateGroup, MsgVote, MsgLeaveGroup, MsgUpdateGroupMetadata, MsgUpdateGroupMembers, MsgSubmitProposal, MsgCreateGroupPolicy, MsgUpdateGroupPolicyMetadata, MsgWithdrawProposal };
-
-type sendMsgUpdateGroupAdminParams = {
-  value: MsgUpdateGroupAdmin,
-  fee?: StdFee,
-  memo?: string
-};
+export { MsgCreateGroupWithPolicy, MsgCreateGroupPolicy, MsgUpdateGroupMetadata, MsgUpdateGroupPolicyDecisionPolicy, MsgCreateGroup, MsgVote, MsgExec, MsgUpdateGroupAdmin, MsgUpdateGroupPolicyMetadata, MsgUpdateGroupMembers, MsgSubmitProposal, MsgUpdateGroupPolicyAdmin, MsgWithdrawProposal, MsgLeaveGroup };
 
 type sendMsgCreateGroupWithPolicyParams = {
   value: MsgCreateGroupWithPolicy,
@@ -37,20 +31,20 @@ type sendMsgCreateGroupWithPolicyParams = {
   memo?: string
 };
 
-type sendMsgExecParams = {
-  value: MsgExec,
+type sendMsgCreateGroupPolicyParams = {
+  value: MsgCreateGroupPolicy,
+  fee?: StdFee,
+  memo?: string
+};
+
+type sendMsgUpdateGroupMetadataParams = {
+  value: MsgUpdateGroupMetadata,
   fee?: StdFee,
   memo?: string
 };
 
 type sendMsgUpdateGroupPolicyDecisionPolicyParams = {
   value: MsgUpdateGroupPolicyDecisionPolicy,
-  fee?: StdFee,
-  memo?: string
-};
-
-type sendMsgUpdateGroupPolicyAdminParams = {
-  value: MsgUpdateGroupPolicyAdmin,
   fee?: StdFee,
   memo?: string
 };
@@ -67,14 +61,20 @@ type sendMsgVoteParams = {
   memo?: string
 };
 
-type sendMsgLeaveGroupParams = {
-  value: MsgLeaveGroup,
+type sendMsgExecParams = {
+  value: MsgExec,
   fee?: StdFee,
   memo?: string
 };
 
-type sendMsgUpdateGroupMetadataParams = {
-  value: MsgUpdateGroupMetadata,
+type sendMsgUpdateGroupAdminParams = {
+  value: MsgUpdateGroupAdmin,
+  fee?: StdFee,
+  memo?: string
+};
+
+type sendMsgUpdateGroupPolicyMetadataParams = {
+  value: MsgUpdateGroupPolicyMetadata,
   fee?: StdFee,
   memo?: string
 };
@@ -91,14 +91,8 @@ type sendMsgSubmitProposalParams = {
   memo?: string
 };
 
-type sendMsgCreateGroupPolicyParams = {
-  value: MsgCreateGroupPolicy,
-  fee?: StdFee,
-  memo?: string
-};
-
-type sendMsgUpdateGroupPolicyMetadataParams = {
-  value: MsgUpdateGroupPolicyMetadata,
+type sendMsgUpdateGroupPolicyAdminParams = {
+  value: MsgUpdateGroupPolicyAdmin,
   fee?: StdFee,
   memo?: string
 };
@@ -109,25 +103,27 @@ type sendMsgWithdrawProposalParams = {
   memo?: string
 };
 
-
-type msgUpdateGroupAdminParams = {
-  value: MsgUpdateGroupAdmin,
+type sendMsgLeaveGroupParams = {
+  value: MsgLeaveGroup,
+  fee?: StdFee,
+  memo?: string
 };
+
 
 type msgCreateGroupWithPolicyParams = {
   value: MsgCreateGroupWithPolicy,
 };
 
-type msgExecParams = {
-  value: MsgExec,
+type msgCreateGroupPolicyParams = {
+  value: MsgCreateGroupPolicy,
+};
+
+type msgUpdateGroupMetadataParams = {
+  value: MsgUpdateGroupMetadata,
 };
 
 type msgUpdateGroupPolicyDecisionPolicyParams = {
   value: MsgUpdateGroupPolicyDecisionPolicy,
-};
-
-type msgUpdateGroupPolicyAdminParams = {
-  value: MsgUpdateGroupPolicyAdmin,
 };
 
 type msgCreateGroupParams = {
@@ -138,12 +134,16 @@ type msgVoteParams = {
   value: MsgVote,
 };
 
-type msgLeaveGroupParams = {
-  value: MsgLeaveGroup,
+type msgExecParams = {
+  value: MsgExec,
 };
 
-type msgUpdateGroupMetadataParams = {
-  value: MsgUpdateGroupMetadata,
+type msgUpdateGroupAdminParams = {
+  value: MsgUpdateGroupAdmin,
+};
+
+type msgUpdateGroupPolicyMetadataParams = {
+  value: MsgUpdateGroupPolicyMetadata,
 };
 
 type msgUpdateGroupMembersParams = {
@@ -154,16 +154,16 @@ type msgSubmitProposalParams = {
   value: MsgSubmitProposal,
 };
 
-type msgCreateGroupPolicyParams = {
-  value: MsgCreateGroupPolicy,
-};
-
-type msgUpdateGroupPolicyMetadataParams = {
-  value: MsgUpdateGroupPolicyMetadata,
+type msgUpdateGroupPolicyAdminParams = {
+  value: MsgUpdateGroupPolicyAdmin,
 };
 
 type msgWithdrawProposalParams = {
   value: MsgWithdrawProposal,
+};
+
+type msgLeaveGroupParams = {
+  value: MsgLeaveGroup,
 };
 
 
@@ -184,20 +184,6 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 
   return {
 		
-		async sendMsgUpdateGroupAdmin({ value, fee, memo }: sendMsgUpdateGroupAdminParams): Promise<DeliverTxResponse> {
-			if (!signer) {
-					throw new Error('TxClient:sendMsgUpdateGroupAdmin: Unable to sign Tx. Signer is not present.')
-			}
-			try {			
-				const { address } = (await signer.getAccounts())[0]; 
-				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgUpdateGroupAdmin({ value: MsgUpdateGroupAdmin.fromPartial(value) })
-				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
-			} catch (e: any) {
-				throw new Error('TxClient:sendMsgUpdateGroupAdmin: Could not broadcast Tx: '+ e.message)
-			}
-		},
-		
 		async sendMsgCreateGroupWithPolicy({ value, fee, memo }: sendMsgCreateGroupWithPolicyParams): Promise<DeliverTxResponse> {
 			if (!signer) {
 					throw new Error('TxClient:sendMsgCreateGroupWithPolicy: Unable to sign Tx. Signer is not present.')
@@ -212,17 +198,31 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		async sendMsgExec({ value, fee, memo }: sendMsgExecParams): Promise<DeliverTxResponse> {
+		async sendMsgCreateGroupPolicy({ value, fee, memo }: sendMsgCreateGroupPolicyParams): Promise<DeliverTxResponse> {
 			if (!signer) {
-					throw new Error('TxClient:sendMsgExec: Unable to sign Tx. Signer is not present.')
+					throw new Error('TxClient:sendMsgCreateGroupPolicy: Unable to sign Tx. Signer is not present.')
 			}
 			try {			
 				const { address } = (await signer.getAccounts())[0]; 
 				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgExec({ value: MsgExec.fromPartial(value) })
+				let msg = this.msgCreateGroupPolicy({ value: MsgCreateGroupPolicy.fromPartial(value) })
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:sendMsgExec: Could not broadcast Tx: '+ e.message)
+				throw new Error('TxClient:sendMsgCreateGroupPolicy: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
+		async sendMsgUpdateGroupMetadata({ value, fee, memo }: sendMsgUpdateGroupMetadataParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgUpdateGroupMetadata: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgUpdateGroupMetadata({ value: MsgUpdateGroupMetadata.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgUpdateGroupMetadata: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
@@ -237,20 +237,6 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
 				throw new Error('TxClient:sendMsgUpdateGroupPolicyDecisionPolicy: Could not broadcast Tx: '+ e.message)
-			}
-		},
-		
-		async sendMsgUpdateGroupPolicyAdmin({ value, fee, memo }: sendMsgUpdateGroupPolicyAdminParams): Promise<DeliverTxResponse> {
-			if (!signer) {
-					throw new Error('TxClient:sendMsgUpdateGroupPolicyAdmin: Unable to sign Tx. Signer is not present.')
-			}
-			try {			
-				const { address } = (await signer.getAccounts())[0]; 
-				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgUpdateGroupPolicyAdmin({ value: MsgUpdateGroupPolicyAdmin.fromPartial(value) })
-				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
-			} catch (e: any) {
-				throw new Error('TxClient:sendMsgUpdateGroupPolicyAdmin: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
@@ -282,31 +268,45 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		async sendMsgLeaveGroup({ value, fee, memo }: sendMsgLeaveGroupParams): Promise<DeliverTxResponse> {
+		async sendMsgExec({ value, fee, memo }: sendMsgExecParams): Promise<DeliverTxResponse> {
 			if (!signer) {
-					throw new Error('TxClient:sendMsgLeaveGroup: Unable to sign Tx. Signer is not present.')
+					throw new Error('TxClient:sendMsgExec: Unable to sign Tx. Signer is not present.')
 			}
 			try {			
 				const { address } = (await signer.getAccounts())[0]; 
 				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgLeaveGroup({ value: MsgLeaveGroup.fromPartial(value) })
+				let msg = this.msgExec({ value: MsgExec.fromPartial(value) })
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:sendMsgLeaveGroup: Could not broadcast Tx: '+ e.message)
+				throw new Error('TxClient:sendMsgExec: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
-		async sendMsgUpdateGroupMetadata({ value, fee, memo }: sendMsgUpdateGroupMetadataParams): Promise<DeliverTxResponse> {
+		async sendMsgUpdateGroupAdmin({ value, fee, memo }: sendMsgUpdateGroupAdminParams): Promise<DeliverTxResponse> {
 			if (!signer) {
-					throw new Error('TxClient:sendMsgUpdateGroupMetadata: Unable to sign Tx. Signer is not present.')
+					throw new Error('TxClient:sendMsgUpdateGroupAdmin: Unable to sign Tx. Signer is not present.')
 			}
 			try {			
 				const { address } = (await signer.getAccounts())[0]; 
 				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgUpdateGroupMetadata({ value: MsgUpdateGroupMetadata.fromPartial(value) })
+				let msg = this.msgUpdateGroupAdmin({ value: MsgUpdateGroupAdmin.fromPartial(value) })
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:sendMsgUpdateGroupMetadata: Could not broadcast Tx: '+ e.message)
+				throw new Error('TxClient:sendMsgUpdateGroupAdmin: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
+		async sendMsgUpdateGroupPolicyMetadata({ value, fee, memo }: sendMsgUpdateGroupPolicyMetadataParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgUpdateGroupPolicyMetadata: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgUpdateGroupPolicyMetadata({ value: MsgUpdateGroupPolicyMetadata.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgUpdateGroupPolicyMetadata: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
@@ -338,31 +338,17 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		async sendMsgCreateGroupPolicy({ value, fee, memo }: sendMsgCreateGroupPolicyParams): Promise<DeliverTxResponse> {
+		async sendMsgUpdateGroupPolicyAdmin({ value, fee, memo }: sendMsgUpdateGroupPolicyAdminParams): Promise<DeliverTxResponse> {
 			if (!signer) {
-					throw new Error('TxClient:sendMsgCreateGroupPolicy: Unable to sign Tx. Signer is not present.')
+					throw new Error('TxClient:sendMsgUpdateGroupPolicyAdmin: Unable to sign Tx. Signer is not present.')
 			}
 			try {			
 				const { address } = (await signer.getAccounts())[0]; 
 				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgCreateGroupPolicy({ value: MsgCreateGroupPolicy.fromPartial(value) })
+				let msg = this.msgUpdateGroupPolicyAdmin({ value: MsgUpdateGroupPolicyAdmin.fromPartial(value) })
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:sendMsgCreateGroupPolicy: Could not broadcast Tx: '+ e.message)
-			}
-		},
-		
-		async sendMsgUpdateGroupPolicyMetadata({ value, fee, memo }: sendMsgUpdateGroupPolicyMetadataParams): Promise<DeliverTxResponse> {
-			if (!signer) {
-					throw new Error('TxClient:sendMsgUpdateGroupPolicyMetadata: Unable to sign Tx. Signer is not present.')
-			}
-			try {			
-				const { address } = (await signer.getAccounts())[0]; 
-				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgUpdateGroupPolicyMetadata({ value: MsgUpdateGroupPolicyMetadata.fromPartial(value) })
-				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
-			} catch (e: any) {
-				throw new Error('TxClient:sendMsgUpdateGroupPolicyMetadata: Could not broadcast Tx: '+ e.message)
+				throw new Error('TxClient:sendMsgUpdateGroupPolicyAdmin: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
@@ -380,14 +366,20 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		
-		msgUpdateGroupAdmin({ value }: msgUpdateGroupAdminParams): EncodeObject {
-			try {
-				return { typeUrl: "/cosmos.group.v1.MsgUpdateGroupAdmin", value: MsgUpdateGroupAdmin.fromPartial( value ) }  
+		async sendMsgLeaveGroup({ value, fee, memo }: sendMsgLeaveGroupParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgLeaveGroup: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgLeaveGroup({ value: MsgLeaveGroup.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:MsgUpdateGroupAdmin: Could not create message: ' + e.message)
+				throw new Error('TxClient:sendMsgLeaveGroup: Could not broadcast Tx: '+ e.message)
 			}
 		},
+		
 		
 		msgCreateGroupWithPolicy({ value }: msgCreateGroupWithPolicyParams): EncodeObject {
 			try {
@@ -397,11 +389,19 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		msgExec({ value }: msgExecParams): EncodeObject {
+		msgCreateGroupPolicy({ value }: msgCreateGroupPolicyParams): EncodeObject {
 			try {
-				return { typeUrl: "/cosmos.group.v1.MsgExec", value: MsgExec.fromPartial( value ) }  
+				return { typeUrl: "/cosmos.group.v1.MsgCreateGroupPolicy", value: MsgCreateGroupPolicy.fromPartial( value ) }  
 			} catch (e: any) {
-				throw new Error('TxClient:MsgExec: Could not create message: ' + e.message)
+				throw new Error('TxClient:MsgCreateGroupPolicy: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgUpdateGroupMetadata({ value }: msgUpdateGroupMetadataParams): EncodeObject {
+			try {
+				return { typeUrl: "/cosmos.group.v1.MsgUpdateGroupMetadata", value: MsgUpdateGroupMetadata.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgUpdateGroupMetadata: Could not create message: ' + e.message)
 			}
 		},
 		
@@ -410,14 +410,6 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 				return { typeUrl: "/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy", value: MsgUpdateGroupPolicyDecisionPolicy.fromPartial( value ) }  
 			} catch (e: any) {
 				throw new Error('TxClient:MsgUpdateGroupPolicyDecisionPolicy: Could not create message: ' + e.message)
-			}
-		},
-		
-		msgUpdateGroupPolicyAdmin({ value }: msgUpdateGroupPolicyAdminParams): EncodeObject {
-			try {
-				return { typeUrl: "/cosmos.group.v1.MsgUpdateGroupPolicyAdmin", value: MsgUpdateGroupPolicyAdmin.fromPartial( value ) }  
-			} catch (e: any) {
-				throw new Error('TxClient:MsgUpdateGroupPolicyAdmin: Could not create message: ' + e.message)
 			}
 		},
 		
@@ -437,19 +429,27 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		msgLeaveGroup({ value }: msgLeaveGroupParams): EncodeObject {
+		msgExec({ value }: msgExecParams): EncodeObject {
 			try {
-				return { typeUrl: "/cosmos.group.v1.MsgLeaveGroup", value: MsgLeaveGroup.fromPartial( value ) }  
+				return { typeUrl: "/cosmos.group.v1.MsgExec", value: MsgExec.fromPartial( value ) }  
 			} catch (e: any) {
-				throw new Error('TxClient:MsgLeaveGroup: Could not create message: ' + e.message)
+				throw new Error('TxClient:MsgExec: Could not create message: ' + e.message)
 			}
 		},
 		
-		msgUpdateGroupMetadata({ value }: msgUpdateGroupMetadataParams): EncodeObject {
+		msgUpdateGroupAdmin({ value }: msgUpdateGroupAdminParams): EncodeObject {
 			try {
-				return { typeUrl: "/cosmos.group.v1.MsgUpdateGroupMetadata", value: MsgUpdateGroupMetadata.fromPartial( value ) }  
+				return { typeUrl: "/cosmos.group.v1.MsgUpdateGroupAdmin", value: MsgUpdateGroupAdmin.fromPartial( value ) }  
 			} catch (e: any) {
-				throw new Error('TxClient:MsgUpdateGroupMetadata: Could not create message: ' + e.message)
+				throw new Error('TxClient:MsgUpdateGroupAdmin: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgUpdateGroupPolicyMetadata({ value }: msgUpdateGroupPolicyMetadataParams): EncodeObject {
+			try {
+				return { typeUrl: "/cosmos.group.v1.MsgUpdateGroupPolicyMetadata", value: MsgUpdateGroupPolicyMetadata.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgUpdateGroupPolicyMetadata: Could not create message: ' + e.message)
 			}
 		},
 		
@@ -469,19 +469,11 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		msgCreateGroupPolicy({ value }: msgCreateGroupPolicyParams): EncodeObject {
+		msgUpdateGroupPolicyAdmin({ value }: msgUpdateGroupPolicyAdminParams): EncodeObject {
 			try {
-				return { typeUrl: "/cosmos.group.v1.MsgCreateGroupPolicy", value: MsgCreateGroupPolicy.fromPartial( value ) }  
+				return { typeUrl: "/cosmos.group.v1.MsgUpdateGroupPolicyAdmin", value: MsgUpdateGroupPolicyAdmin.fromPartial( value ) }  
 			} catch (e: any) {
-				throw new Error('TxClient:MsgCreateGroupPolicy: Could not create message: ' + e.message)
-			}
-		},
-		
-		msgUpdateGroupPolicyMetadata({ value }: msgUpdateGroupPolicyMetadataParams): EncodeObject {
-			try {
-				return { typeUrl: "/cosmos.group.v1.MsgUpdateGroupPolicyMetadata", value: MsgUpdateGroupPolicyMetadata.fromPartial( value ) }  
-			} catch (e: any) {
-				throw new Error('TxClient:MsgUpdateGroupPolicyMetadata: Could not create message: ' + e.message)
+				throw new Error('TxClient:MsgUpdateGroupPolicyAdmin: Could not create message: ' + e.message)
 			}
 		},
 		
@@ -490,6 +482,14 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 				return { typeUrl: "/cosmos.group.v1.MsgWithdrawProposal", value: MsgWithdrawProposal.fromPartial( value ) }  
 			} catch (e: any) {
 				throw new Error('TxClient:MsgWithdrawProposal: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgLeaveGroup({ value }: msgLeaveGroupParams): EncodeObject {
+			try {
+				return { typeUrl: "/cosmos.group.v1.MsgLeaveGroup", value: MsgLeaveGroup.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgLeaveGroup: Could not create message: ' + e.message)
 			}
 		},
 		
