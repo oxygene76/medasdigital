@@ -115,13 +115,8 @@ import (
 
 const (
 	AccountAddressPrefix = "medas"
-<<<<<<< HEAD
 	UpgradeName = "v0.97a"
 	Name        = "medasdigital"
-=======
-	Name                 = "medasdigital"
-	UpgradeName  	     = "v0.97"
->>>>>>> 387057be364cf7a7b6bc74f2cca7e3494c3b4a97
 )
 
 // this line is used by starport scaffolding # stargate/wasm/app/enabledProposals
@@ -722,8 +717,6 @@ func New(
 	app.SetBeginBlocker(app.BeginBlocker)
 	app.SetEndBlocker(app.EndBlocker)
 
-<<<<<<< HEAD
-=======
 	// if manager := app.SnapshotManager(); manager != nil {
 	//	err = manager.RegisterExtensions(
 	//		wasmkeeper.NewWasmSnapshotter(app.CommitMultiStore(), &app.wasmKeeper),
@@ -733,7 +726,6 @@ func New(
 	//	}
 	//}
 
->>>>>>> 387057be364cf7a7b6bc74f2cca7e3494c3b4a97
 	upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
 	if err != nil {
 		panic(err)
@@ -746,10 +738,6 @@ func New(
 		app.SetStoreLoader(upgradetypes.UpgradeStoreLoader(upgradeInfo.Height, &storeUpgrades))
 	}
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 387057be364cf7a7b6bc74f2cca7e3494c3b4a97
 	if loadLatest {
 		if err := app.LoadLatestVersion(); err != nil {
 			tmos.Exit(err.Error())
@@ -923,10 +911,6 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	return paramsKeeper
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 387057be364cf7a7b6bc74f2cca7e3494c3b4a97
 	// RegisterUpgradeHandlers returns upgrade handlers
 func (app *App) RegisterUpgradeHandlers(cfg module.Configurator) {
 	app.UpgradeKeeper.SetUpgradeHandler(UpgradeName, func(ctx sdk.Context, plan upgradetypes.Plan, vm module.VersionMap) (module.VersionMap, error) {
@@ -934,10 +918,6 @@ func (app *App) RegisterUpgradeHandlers(cfg module.Configurator) {
 	})
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 387057be364cf7a7b6bc74f2cca7e3494c3b4a97
 // SimulationManager implements the SimulationApp interface
 func (app *App) SimulationManager() *module.SimulationManager {
 	return app.sm
