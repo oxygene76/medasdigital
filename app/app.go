@@ -115,7 +115,8 @@ import (
 
 const (
 	AccountAddressPrefix = "medas"
-	Name                 = "medasdigital"
+	UpgradeName = "v0.97a"
+	Name        = "medasdigital"
 )
 
 // this line is used by starport scaffolding # stargate/wasm/app/enabledProposals
@@ -501,8 +502,20 @@ func New(
 		app.MsgServiceRouter(),
 		govConfig,
 	)
+	
+	app.UpgradeKeeper.SetUpgradeHandler("decrease-unbonding-period",
+  func(ctx sdk.Context, _ upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
+    return app.mm.RunMigrations(ctx, app.configurator, fromVM)
+  })
 
-	app.MedasdigitalKeeper = *medasdigitalmodulekeeper.NewKeeper(
+	app.UpgradeKeeper.SetUpgradeHandler("decrease-unbonding-period2",
+  func(ctx sdk.Context, _ upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
+    return app.mm.RunMigrations(ctx, app.configurator, fromVM)
+  })
+	
+
+
+  	app.MedasdigitalKeeper = *medasdigitalmodulekeeper.NewKeeper(
 		appCodec,
 		keys[medasdigitalmoduletypes.StoreKey],
 		keys[medasdigitalmoduletypes.MemStoreKey],
@@ -702,6 +715,19 @@ func New(
 	app.SetBeginBlocker(app.BeginBlocker)
 	app.SetEndBlocker(app.EndBlocker)
 
+	upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
+	if err != nil {
+		panic(err)
+	}
+
+	if upgradeInfo.Name == UpgradeName && !app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
+		storeUpgrades := storetypes.StoreUpgrades{}
+
+		// configure store loader that checks if version == upgradeHeight and applies store upgrades
+		app.SetStoreLoader(upgradetypes.UpgradeStoreLoader(upgradeInfo.Height, &storeUpgrades))
+	}
+
+
 	if loadLatest {
 		if err := app.LoadLatestVersion(); err != nil {
 			tmos.Exit(err.Error())
@@ -874,6 +900,15 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 
 	return paramsKeeper
 }
+
+
+	// RegisterUpgradeHandlers returns upgrade handlers
+func (app *App) RegisterUpgradeHandlers(cfg module.Configurator) {
+	app.UpgradeKeeper.SetUpgradeHandler(UpgradeName, func(ctx sdk.Context, plan upgradetypes.Plan, vm module.VersionMap) (module.VersionMap, error) {
+		return app.mm.RunMigrations(ctx, cfg, vm)
+	})
+}
+
 
 // SimulationManager implements the SimulationApp interface
 func (app *App) SimulationManager() *module.SimulationManager {
