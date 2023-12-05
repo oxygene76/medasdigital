@@ -115,7 +115,7 @@ import (
 
 const (
 	AccountAddressPrefix = "medas"
-	UpgradeName = "v0.97a"
+	UpgradeName = "v0.98a"
 	Name        = "medasdigital"
 )
 
