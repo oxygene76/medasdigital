@@ -102,7 +102,7 @@ import (
 	ibchost "github.com/cosmos/ibc-go/v7/modules/core/24-host"
 	ibckeeper "github.com/cosmos/ibc-go/v7/modules/core/keeper"
 
-	"github.com/ignite/cli/ignite/pkg/openapiconsole"
+	//"github.com/ignite/cli/ignite/pkg/openapiconsole"
 	"github.com/spf13/cast"
 	
 	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
@@ -323,7 +323,11 @@ func New(
 	)
 
 	// set the BaseApp's parameter store
-	bApp.SetParamStore(app.ParamsKeeper.Subspace(baseapp.Paramspace).WithKeyTable(paramstypes.ConsensusParamsKeyTable()))
+	//bApp.SetParamStore(app.ParamsKeeper.Subspace(baseapp.Paramspace).WithKeyTable(paramstypes.ConsensusParamsKeyTable()))
+	
+	app.ConsensusParamsKeeper = consensusparamkeeper.NewKeeper(appCodec, keys[consensusparamstypes.StoreKey], authtypes.NewModuleAddress(govtypes.ModuleName).String())
+	bApp.SetParamStore(&app.ConsensusParamsKeeper)
+
 
 	// add capability keeper and ScopeToModule for ibc module
 	app.CapabilityKeeper = capabilitykeeper.NewKeeper(
@@ -516,14 +520,6 @@ func New(
 		govConfig,
 	)
 	
-	app.UpgradeKeeper.SetUpgradeHandler("decrease-unbonding-period",
-  func(ctx sdk.Context, _ upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
-    return app.mm.RunMigrations(ctx, app.configurator, fromVM)
-  })
-
-	app.UpgradeKeeper.SetUpgradeHandler("decrease-unbonding-period2",
-  func(ctx sdk.Context, _ upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
-    return app.mm.RunMigrations(ctx, app.configurator, fromVM)
   })
 	
 
@@ -735,31 +731,18 @@ func New(
 	}
 
 	app.SetAnteHandler(anteHandler)
-	app.SetInitChainer(app.InitChainer)
-	app.SetBeginBlocker(app.BeginBlocker)
+	
 	app.SetEndBlocker(app.EndBlocker)
 
-	// if manager := app.SnapshotManager(); manager != nil {
-	//	err = manager.RegisterExtensions(
-	//		wasmkeeper.NewWasmSnapshotter(app.CommitMultiStore(), &app.wasmKeeper),
-	//	)
-	//	if err != nil {
-	//		panic("failed to register snapshot extension: " + err.Error())
-	//	}
-	//}
-
-	upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
-	if err != nil {
-		panic(err)
+	if manager := app.SnapshotManager(); manager != nil {
+		err = manager.RegisterExtensions(
+			//wasmkeeper.NewWasmSnapshotter(app.CommitMultiStore(), &app.wasmKeeper),
+		)
+		if err != nil {
+			panic("failed to register snapshot extension: " + err.Error())
+		}
 	}
-
-	if upgradeInfo.Name == UpgradeName && !app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
-		storeUpgrades := storetypes.StoreUpgrades{}
-
-		// configure store loader that checks if version == upgradeHeight and applies store upgrades
-		app.SetStoreLoader(upgradetypes.UpgradeStoreLoader(upgradeInfo.Height, &storeUpgrades))
-	}
-
+        
 	if loadLatest {
 		if err := app.LoadLatestVersion(); err != nil {
 			tmos.Exit(err.Error())
@@ -771,6 +754,54 @@ func New(
 	// this line is used by starport scaffolding # stargate/app/beforeInitReturn
 
 	return app
+}
+
+func (app *App) setupUpgradeStoreLoaders() {
+	upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
+       	if err != nil {
+               	panic(err)
+       	}
+
+	if app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
+		return
+	}
+
+       	for _, upgrd := range Upgrades {
+		if upgradeInfo.Name == upgrd.UpgradeName {
+			
+			// configure store loader that checks if version == upgradeHeight and applies store upgrades
+			app.SetStoreLoader(upgradetypes.UpgradeStoreLoader(upgradeInfo.Height, &upgrd.StoreUpgrades))
+		}
+	}
+}
+
+func (app *App) setupUpgradeHandlers() {
+	for _, upgrd := range Upgrades {
+		app.UpgradeKeeper.SetUpgradeHandler(
+			upgrd.UpgradeName,
+			upgrd.CreateUpgradeHandler(
+				app.mm,
+				app.configurator,
+				&upgrades.UpgradeKeepers{
+					AccountKeeper:       app.AccountKeeper,
+					FeeBurnerKeeper:     app.FeeBurnerKeeper,
+					CronKeeper:          app.CronKeeper,
+					IcqKeeper:           app.InterchainQueriesKeeper,
+					TokenFactoryKeeper:  app.TokenFactoryKeeper,
+					SlashingKeeper:      app.SlashingKeeper,
+					ParamsKeeper:        app.ParamsKeeper,
+					CapabilityKeeper:    app.CapabilityKeeper,
+					ContractManager:     app.ContractManagerKeeper,
+					AdminModule:         app.AdminmoduleKeeper,
+					ConsensusKeeper:     &app.ConsensusParamsKeeper,
+					GlobalFeeSubspace:   app.GetSubspace(globalfee.ModuleName),
+					CcvConsumerSubspace: app.GetSubspace(ccvconsumertypes.ModuleName),
+				},
+				app,
+				app.AppCodec(),
+			),
+		)
+	}
 }
 
 // Name returns the name of the App
@@ -933,10 +964,14 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	return paramsKeeper
 }
 
-	// RegisterUpgradeHandlers returns upgrade handlers
+// RegisterUpgradeHandlers returns upgrade handlers
 func (app *App) RegisterUpgradeHandlers(cfg module.Configurator) {
 	app.UpgradeKeeper.SetUpgradeHandler(UpgradeName, func(ctx sdk.Context, plan upgradetypes.Plan, vm module.VersionMap) (module.VersionMap, error) {
-		return app.mm.RunMigrations(ctx, cfg, vm)
+		 ctx.Logger().Info("Starting upgrade v0.98a...")
+	         ctx.Logger().Info("Migrating tendermint consensus params from x/params to x/consensus...")
+	         legacyParamSubspace := paramsKeeper.Subspace(baseapp.Paramspace).WithKeyTable(paramstypes.ConsensusParamsKeyTable())
+	         baseapp.MigrateParams(ctx, legacyParamSubspace, &consensusParamsKeeper)
+		 return app.mm.RunMigrations(ctx, cfg, vm)
 	})
 }
 
