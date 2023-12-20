@@ -1,7 +1,0 @@
-syntax = "proto3";
-package medasdigital.medasdigital;
-
-option go_package = "medasdigital/x/medasdigital/types";
-
-// Msg defines the Msg service.
-service Msg {}

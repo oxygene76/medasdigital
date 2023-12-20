@@ -1,0 +1,17 @@
+syntax = "proto3";
+package medasdigital.feeburner;
+
+import "gogoproto/gogo.proto";
+import "medasdigital/feeburner/params.proto";
+import "medasdigital/feeburner/total_burned_medas_amount.proto";
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "medasdigital/x/feeburner/types";
+
+// GenesisState defines the feeburner module's genesis state.
+message GenesisState {
+  Params params = 1 [ (gogoproto.nullable) = false ];
+  TotalBurnedMedasAmount total_burned_medas_amount = 2
+  [ (gogoproto.nullable) = false ];
+  // this line is used by starport scaffolding # genesis/proto/state
+}

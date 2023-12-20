@@ -1,0 +1,18 @@
+syntax = "proto3";
+package medasdigital.feeburner;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "medasdigital/x/feeburner/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+  // Defines Medas denom, which will be burned during fee processing, any
+  // other denom will be sent to Treasury
+  string medas_denom = 1;
+  // Is not used anymore
+  string reserve_address = 2;
+  // Defines treasury address
+  string treasury_address = 3;
+}

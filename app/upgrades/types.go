@@ -14,7 +14,7 @@ import (
 
 	//contractmanagerkeeper "github.com/neutron-org/neutron/v2/x/contractmanager/keeper"
 	//cronkeeper "github.com/neutron-org/neutron/v2/x/cron/keeper"
-	//feeburnerkeeper "github.com/neutron-org/neutron/v2/x/feeburner/keeper"
+	feeburnerkeeper "medasdigital/x/feeburner/keeper"
 	//icqkeeper "github.com/neutron-org/neutron/v2/x/interchainqueries/keeper"
 	//tokenfactorykeeper "github.com/neutron-org/neutron/v2/x/tokenfactory/keeper"
 
@@ -26,7 +26,7 @@ import (
 // An upgrade must implement this struct, and then set it in the app.go.
 // The app.go will then define the handler.
 type Upgrade struct {
-	// Upgrade version name, for the upgrade handler, e.g. `v0.98a`
+	// Upgrade version name, for the upgrade handler, e.g. `v7`
 	UpgradeName string
 
 	// CreateUpgradeHandler defines the function that creates an upgrade handler
@@ -42,12 +42,12 @@ type UpgradeKeepers struct {
 	//IcqKeeper          icqkeeper.Keeper
 	//CronKeeper         cronkeeper.Keeper
 	//TokenFactoryKeeper *tokenfactorykeeper.Keeper
-	//FeeBurnerKeeper    *feeburnerkeeper.Keeper
+	FeeBurnerKeeper    *feeburnerkeeper.Keeper
 	SlashingKeeper     slashingkeeper.Keeper
 	ParamsKeeper       paramskeeper.Keeper
 	CapabilityKeeper   *capabilitykeeper.Keeper
 	ContractManager    contractmanagerkeeper.Keeper
-	//AdminModule        adminmodulekeeper.Keeper
+	AdminModule        adminmodulekeeper.Keeper
 	ConsensusKeeper    *consensuskeeper.Keeper
 	// subspaces
 	//GlobalFeeSubspace   paramtypes.Subspace

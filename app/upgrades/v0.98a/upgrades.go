@@ -8,7 +8,7 @@ import (
 	consensuskeeper "github.com/cosmos/cosmos-sdk/x/consensus/keeper"
 	paramstypes "github.com/cosmos/cosmos-sdk/x/params/types"
 
-	"github.com/oxygene76/medasdigital/app/params"
+	"medasdigital/app/params"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
@@ -17,11 +17,11 @@ import (
 	capabilitytypes "github.com/cosmos/cosmos-sdk/x/capability/types"
 	paramskeeper "github.com/cosmos/cosmos-sdk/x/params/keeper"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
-	"github.com/cosmos/gaia/v11/x/globalfee/types"
+	//"github.com/cosmos/gaia/v11/x/globalfee/types"
 	v6 "github.com/cosmos/ibc-go/v7/modules/apps/27-interchain-accounts/controller/migrations/v6"
 	ccvconsumertypes "github.com/cosmos/interchain-security/v3/x/ccv/consumer/types"
 
-	"github.com/oxygene76/medasdigital/app/upgrades"
+	"medasdigital/app/upgrades"
 	//contractmanagerkeeper "github.com/neutron-org/neutron/v2/x/contractmanager/keeper"
 	//contractmanagertypes "github.com/neutron-org/neutron/v2/x/contractmanager/types"
 	//crontypes "github.com/neutron-org/neutron/v2/x/cron/types"
@@ -102,12 +102,12 @@ func CreateUpgradeHandler(
 		//	return vm, err
 		//}
 
-		ctx.Logger().Info("migrating adminmodule...")
-		err = migrateAdminModule(ctx, keepers)
-		if err != nil {
-			ctx.Logger().Error("failed to migrate admin module", "err", err)
-			return vm, err
-		}
+		//ctx.Logger().Info("migrating adminmodule...")
+		//err = migrateAdminModule(ctx, keepers)
+		//if err != nil {
+		//	ctx.Logger().Error("failed to migrate admin module", "err", err)
+		//	return vm, err
+		//}
 
 		ctx.Logger().Info("Migrating consensus params...")
 		migrateConsensusParams(ctx, keepers.ParamsKeeper, keepers.ConsensusKeeper)

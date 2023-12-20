@@ -118,9 +118,15 @@ import (
 	//tmos "github.com/tendermint/tendermint/libs/os"
 	//dbm "github.com/tendermint/tm-db"
 
-	medasdigitalmodule "medasdigital/x/medasdigital"
-	medasdigitalmodulekeeper "medasdigital/x/medasdigital/keeper"
-	medasdigitalmoduletypes "medasdigital/x/medasdigital/types"
+	"medasdigital/x/feeburner"
+	feeburnerkeeper "medasdigital/x/feeburner/keeper"
+	feeburnertypes "medasdigital/x/feeburner/types"
+
+	
+	
+	"medasdigital/app/upgrades"
+	v098 "medasdigital/app/upgrades/v0.98a"
+
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	appparams "medasdigital/app/params"
@@ -129,9 +135,10 @@ import (
 
 const (
 	AccountAddressPrefix = "medas"
-	UpgradeName = "v0.98a"
 	Name        = "medasdigital"
 )
+var (
+	Upgrades = []upgrades.Upgrade{v098.Upgrade}
 
 // this line is used by starport scaffolding # stargate/wasm/app/enabledProposals
 
@@ -180,7 +187,7 @@ var (
 		transfer.AppModuleBasic{},
 		ica.AppModuleBasic{},
 		vesting.AppModuleBasic{},
-		medasdigitalmodule.AppModuleBasic{},
+		feeburner.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
 	)
 
@@ -189,6 +196,7 @@ var (
 		authtypes.FeeCollectorName:     nil,
 		distrtypes.ModuleName:          nil,
 		icatypes.ModuleName:            nil,
+		feeburnertypes.ModuleName:	nil,
 		minttypes.ModuleName:           {authtypes.Minter},
 		stakingtypes.BondedPoolName:    {authtypes.Burner, authtypes.Staking},
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
@@ -253,7 +261,7 @@ type App struct {
 	ScopedTransferKeeper capabilitykeeper.ScopedKeeper
 	ScopedICAHostKeeper  capabilitykeeper.ScopedKeeper
 
-	MedasdigitalKeeper medasdigitalmodulekeeper.Keeper
+        FeeBurnerKeeper     *feeburnerkeeper.Keeper	
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// mm is the module manager
@@ -298,7 +306,7 @@ func New(
 		paramstypes.StoreKey, ibchost.StoreKey, upgradetypes.StoreKey, feegrant.StoreKey, evidencetypes.StoreKey,
 		ibctransfertypes.StoreKey, icahosttypes.StoreKey, capabilitytypes.StoreKey, group.StoreKey,
 		icacontrollertypes.StoreKey,
-		medasdigitalmoduletypes.StoreKey,
+		feeburnertypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -342,6 +350,8 @@ func New(
 	scopedTransferKeeper := app.CapabilityKeeper.ScopeToModule(ibctransfertypes.ModuleName)
 	scopedICAHostKeeper := app.CapabilityKeeper.ScopeToModule(icahosttypes.SubModuleName)
 	// this line is used by starport scaffolding # stargate/app/scopedKeeper
+
+	app.CapabilityKeeper.Seal()
 
 	// add keepers
 	app.AccountKeeper = authkeeper.NewAccountKeeper(
@@ -524,18 +534,16 @@ func New(
 	
 
 
-  	app.MedasdigitalKeeper = *medasdigitalmodulekeeper.NewKeeper(
+	app.FeeburnKeeper = *feeburnmodulekeeper.NewKeeper(
 		appCodec,
-		keys[medasdigitalmoduletypes.StoreKey],
-		keys[medasdigitalmoduletypes.MemStoreKey],
-		app.GetSubspace(medasdigitalmoduletypes.ModuleName),
+		keys[feeburnmoduletypes.StoreKey],
+		keys[feeburnmoduletypes.MemStoreKey],
+		authtypes.NewModuleAddress(govtypes.ModuleName),
 	)
-	medasdigitalModule := medasdigitalmodule.NewAppModule(appCodec, app.MedasdigitalKeeper, app.AccountKeeper, app.BankKeeper)
-
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
 	// Sealing prevents other modules from creating scoped sub-keepers
-	app.CapabilityKeeper.Seal()
+	//app.CapabilityKeeper.Seal()
 
 	// Create static IBC router, add transfer route, then set and seal it
 	ibcRouter := ibcporttypes.NewRouter()
@@ -577,7 +585,7 @@ func New(
 		params.NewAppModule(app.ParamsKeeper),
 		transferModule,
 		icaModule,
-		medasdigitalModule,
+		feeBurnerModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 
@@ -607,7 +615,7 @@ func New(
 		group.ModuleName,
 		paramstypes.ModuleName,
 		vestingtypes.ModuleName,
-		medasdigitalmoduletypes.ModuleName,
+		feeburnertypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	)
 
@@ -632,7 +640,7 @@ func New(
 		paramstypes.ModuleName,
 		upgradetypes.ModuleName,
 		vestingtypes.ModuleName,
-		medasdigitalmoduletypes.ModuleName,
+		feeburnertypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	)
 
@@ -662,7 +670,7 @@ func New(
 		paramstypes.ModuleName,
 		upgradetypes.ModuleName,
 		vestingtypes.ModuleName,
-		medasdigitalmoduletypes.ModuleName,
+		feeburnertypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	)
 
@@ -675,7 +683,7 @@ func New(
 	app.configurator = module.NewConfigurator(app.appCodec, app.MsgServiceRouter(), app.GRPCQueryRouter())
 	app.mm.RegisterServices(app.configurator)
 
-        app.RegisterUpgradeHandlers(app.configurator)	
+	app.setupUpgradeHandlers()
 
 	autocliv1.RegisterQueryServer(app.GRPCQueryRouter(), runtimeservices.NewAutoCLIQueryService(app.mm.Modules))
 
@@ -703,7 +711,7 @@ func New(
 		evidence.NewAppModule(app.EvidenceKeeper),
 		ibc.NewAppModule(app.IBCKeeper),
 		transferModule,
-		medasdigitalModule,
+		feeBurnerModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 	app.sm.RegisterStoreDecoders()
@@ -958,21 +966,10 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(ibchost.ModuleName)
 	paramsKeeper.Subspace(icacontrollertypes.SubModuleName)
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
-	paramsKeeper.Subspace(medasdigitalmoduletypes.ModuleName)
+	paramsKeeper.Subspace(feeburnertypes.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 
 	return paramsKeeper
-}
-
-// RegisterUpgradeHandlers returns upgrade handlers
-func (app *App) RegisterUpgradeHandlers(cfg module.Configurator) {
-	app.UpgradeKeeper.SetUpgradeHandler(UpgradeName, func(ctx sdk.Context, plan upgradetypes.Plan, vm module.VersionMap) (module.VersionMap, error) {
-		 ctx.Logger().Info("Starting upgrade v0.98a...")
-	         ctx.Logger().Info("Migrating tendermint consensus params from x/params to x/consensus...")
-	         legacyParamSubspace := paramsKeeper.Subspace(baseapp.Paramspace).WithKeyTable(paramstypes.ConsensusParamsKeyTable())
-	         baseapp.MigrateParams(ctx, legacyParamSubspace, &consensusParamsKeeper)
-		 return app.mm.RunMigrations(ctx, cfg, vm)
-	})
 }
 
 // SimulationManager implements the SimulationApp interface
