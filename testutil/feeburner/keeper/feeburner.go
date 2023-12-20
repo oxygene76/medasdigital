@@ -16,8 +16,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"medasdigital/x/feeburner/keeper"
-	"medasdigital/x/feeburner/types"
+	"github.com/oxygene76/medasdigital/x/feeburner/keeper"
+	"github.com/oxygene76/medasdigital/x/feeburner/types"
 )
 
 func FeeburnerKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {

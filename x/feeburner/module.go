@@ -20,9 +20,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 
-	"medasdigital/x/feeburner/client/cli"
-	"medasdigital/x/feeburner/keeper"
-	"medasdigital/x/feeburner/types"
+	"github.com/oxygene76/medasdigital/x/feeburner/client/cli"
+	"github.com/oxygene76/medasdigital/x/feeburner/keeper"
+	"github.com/oxygene76/medasdigital/x/feeburner/types"
 )
 
 var (

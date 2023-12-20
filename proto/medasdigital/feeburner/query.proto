@@ -8,7 +8,7 @@ import "medasdigital/feeburner/params.proto";
 import "medasdigital/feeburner/total_burned_medas_amount.proto";
 // this line is used by starport scaffolding # 1
 
-option go_package = "medasdigital/x/feeburner/types";
+option go_package = "github.com/oxygene76/medasdigital/x/feeburner/types";
 
 // Query defines the gRPC querier service.
 service Query {

@@ -3,12 +3,12 @@ package keeper_test
 import (
 	"testing"
 
-	"medasdigital/app"
+	"github.com/oxygene76/medasdigital/app"
 
 	"github.com/stretchr/testify/require"
 
-	testkeeper "medasdigital/testutil/feeburner/keeper"
-	"medasdigital/x/feeburner/types"
+	testkeeper "github.com/oxygene76/medasdigital/testutil/feeburner/keeper"
+	"github.com/oxygene76/medasdigital/x/feeburner/types"
 )
 
 func TestGetParams(t *testing.T) {

@@ -3,7 +3,7 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"medasdigital/x/feeburner/types"
+	"github.com/oxygene76/medasdigital/x/feeburner/types"
 )
 
 // GetParams get all parameters as types.Params

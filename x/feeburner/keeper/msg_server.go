@@ -7,7 +7,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"medasdigital/x/feeburner/types"
+	"github.com/oxygene76/medasdigital/x/feeburner/types"
 )
 
 type msgServer struct {

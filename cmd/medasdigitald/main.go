@@ -6,8 +6,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/server"
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 
-	"medasdigital/app"
-	"medasdigital/cmd/medasdigitald/cmd"
+	"github.com/oxygene76/medasdigital/app"
+	"github.com/oxygene76/medasdigital/cmd/medasdigitald/cmd"
 )
 
 func main() {

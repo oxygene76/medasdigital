@@ -5,7 +5,7 @@ import (
 	consensusparamtypes "github.com/cosmos/cosmos-sdk/x/consensus/types"
 	crisistypes "github.com/cosmos/cosmos-sdk/x/crisis/types"
 
-	"medasdigital/app/upgrades"
+	"github.com/oxygene76/medasdigital/app/upgrades"
 	//dextypes "github.com/neutron-org/neutron/v2/x/dex/types"
 )
 

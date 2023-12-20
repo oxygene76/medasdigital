@@ -38,8 +38,8 @@ import (
 	"github.com/spf13/pflag"
 	// this line is used by starport scaffolding # root/moduleImport
 
-	"medasdigital/app"
-	appparams "medasdigital/app/params"
+	"github.com/oxygene76/medasdigital/app"
+	appparams "github.com/oxygene76/medasdigital/app/params"
 )
 
 // NewRootCmd creates a new root command for a Cosmos SDK application

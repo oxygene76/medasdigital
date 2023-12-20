@@ -1,27 +1,27 @@
 package v098a
 
 import (
-	"fmt"
+	//"fmt"
 
 	//wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	consensuskeeper "github.com/cosmos/cosmos-sdk/x/consensus/keeper"
 	paramstypes "github.com/cosmos/cosmos-sdk/x/params/types"
 
-	"medasdigital/app/params"
+	//"github.com/oxygene76/medasdigital/app/params"
 
 	"github.com/cosmos/cosmos-sdk/codec"
-	storetypes "github.com/cosmos/cosmos-sdk/store/types"
+	//storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
-	capabilitytypes "github.com/cosmos/cosmos-sdk/x/capability/types"
+	//capabilitytypes "github.com/cosmos/cosmos-sdk/x/capability/types"
 	paramskeeper "github.com/cosmos/cosmos-sdk/x/params/keeper"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 	//"github.com/cosmos/gaia/v11/x/globalfee/types"
-	v6 "github.com/cosmos/ibc-go/v7/modules/apps/27-interchain-accounts/controller/migrations/v6"
-	ccvconsumertypes "github.com/cosmos/interchain-security/v3/x/ccv/consumer/types"
+	//v6 "github.com/cosmos/ibc-go/v7/modules/apps/27-interchain-accounts/controller/migrations/v6"
+	//ccvconsumertypes "github.com/cosmos/interchain-security/v3/x/ccv/consumer/types"
 
-	"medasdigital/app/upgrades"
+	"github.com/oxygene76/medasdigital/app/upgrades"
 	//contractmanagerkeeper "github.com/neutron-org/neutron/v2/x/contractmanager/keeper"
 	//contractmanagertypes "github.com/neutron-org/neutron/v2/x/contractmanager/types"
 	//crontypes "github.com/neutron-org/neutron/v2/x/cron/types"
@@ -40,11 +40,11 @@ func CreateUpgradeHandler(
 	codec codec.Codec,
 ) upgradetypes.UpgradeHandler {
 	return func(ctx sdk.Context, plan upgradetypes.Plan, vm module.VersionMap) (module.VersionMap, error) {
-		ctx.Logger().Info("Migrating channel capability...")
+		//ctx.Logger().Info("Migrating channel capability...")
 		// https://github.com/cosmos/ibc-go/blob/v7.0.1/docs/migrations/v5-to-v6.md#upgrade-proposal
-		if err := v6.MigrateICS27ChannelCapability(ctx, codec, storeKeys.GetKey(capabilitytypes.StoreKey), keepers.CapabilityKeeper, interchaintxstypes.ModuleName); err != nil {
-			return nil, err
-		}
+		//if err := v6.MigrateICS27ChannelCapability(ctx, codec, storeKeys.GetKey(capabilitytypes.StoreKey), keepers.CapabilityKeeper, interchaintxstypes.ModuleName); err != nil {
+		//	return nil, err
+		//}
 
 		ctx.Logger().Info("Starting module migrations...")
 		vm, err := mm.RunMigrations(ctx, configurator, vm)
@@ -277,16 +277,16 @@ func migrateRewardDenoms(ctx sdk.Context, keepers *upgrades.UpgradeKeepers) erro
 
 	return nil
 }
-*/(
-func migrateAdminModule(ctx sdk.Context, keepers *upgrades.UpgradeKeepers) error { //nolint:unparam
-	ctx.Logger().Info("Migrating admin module...")
-
-	keepers.AdminModule.SetProposalID(ctx, 1)
-
-	ctx.Logger().Info("Finished migrating admin module")
-
-	return nil
-}
+(*/
+//func migrateAdminModule(ctx sdk.Context, keepers *upgrades.UpgradeKeepers) error { //nolint:unparam
+//	ctx.Logger().Info("Migrating admin module...")
+//
+//	keepers.AdminModule.SetProposalID(ctx, 1)
+//
+//	ctx.Logger().Info("Finished migrating admin module")
+//
+//	return nil
+//}
 
 func migrateConsensusParams(ctx sdk.Context, paramsKeepers paramskeeper.Keeper, keeper *consensuskeeper.Keeper) {
 	baseAppLegacySS := paramsKeepers.Subspace(baseapp.Paramspace).WithKeyTable(paramstypes.ConsensusParamsKeyTable())

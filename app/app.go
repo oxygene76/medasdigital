@@ -15,6 +15,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/server/api"
 	"github.com/cosmos/cosmos-sdk/server/config"
+	
+	nodeservice "github.com/cosmos/cosmos-sdk/client/grpc/node"
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	//"github.com/cosmos/cosmos-sdk/simapp"
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
@@ -36,6 +38,10 @@ import (
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	"github.com/cosmos/cosmos-sdk/x/capability"
+	
+	consensusparamkeeper "github.com/cosmos/cosmos-sdk/x/consensus/keeper"
+	consensusparamtypes "github.com/cosmos/cosmos-sdk/x/consensus/types"
+
 	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"
 	capabilitytypes "github.com/cosmos/cosmos-sdk/x/capability/types"
 	"github.com/cosmos/cosmos-sdk/x/crisis"
@@ -99,7 +105,8 @@ import (
 	ibcclientclient "github.com/cosmos/ibc-go/v7/modules/core/02-client/client"
 	ibcclienttypes "github.com/cosmos/ibc-go/v7/modules/core/02-client/types"
 	ibcporttypes "github.com/cosmos/ibc-go/v7/modules/core/05-port/types"
-	ibchost "github.com/cosmos/ibc-go/v7/modules/core/24-host"
+	ibchost "github.com/cosmos/ibc-go/v7/modules/core/exported"
+	//ibchost "github.com/cosmos/ibc-go/v7/modules/core/24-host"
 	ibckeeper "github.com/cosmos/ibc-go/v7/modules/core/keeper"
 
 	//"github.com/ignite/cli/ignite/pkg/openapiconsole"
@@ -118,29 +125,25 @@ import (
 	//tmos "github.com/tendermint/tendermint/libs/os"
 	//dbm "github.com/tendermint/tm-db"
 
-	"medasdigital/x/feeburner"
-	feeburnerkeeper "medasdigital/x/feeburner/keeper"
-	feeburnertypes "medasdigital/x/feeburner/types"
+	"github.com/oxygene76/medasdigital/x/feeburner"
+	feeburnerkeeper "github.com/oxygene76/medasdigital/x/feeburner/keeper"
+	feeburnertypes "github.com/oxygene76/medasdigital/x/feeburner/types"
 
 	
 	
-	"medasdigital/app/upgrades"
-	v098 "medasdigital/app/upgrades/v0.98a"
+	"github.com/oxygene76/medasdigital/app/upgrades"
+	v098 "github.com/oxygene76/medasdigital/app/upgrades/v0.98a"
 
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
-	appparams "medasdigital/app/params"
-	"medasdigital/docs"
+	appparams "github.com/oxygene76/medasdigital/app/params"
+	//"github.com/oxygene76/medasdigital/docs"
 )
 
 const (
 	AccountAddressPrefix = "medas"
 	Name        = "medasdigital"
 )
-var (
-	Upgrades = []upgrades.Upgrade{v098.Upgrade}
-
-// this line is used by starport scaffolding # stargate/wasm/app/enabledProposals
 
 func getGovProposalHandlers() []govclient.ProposalHandler {
 	var govProposalHandlers []govclient.ProposalHandler
@@ -148,7 +151,7 @@ func getGovProposalHandlers() []govclient.ProposalHandler {
 
 	govProposalHandlers = append(govProposalHandlers,
 		paramsclient.ProposalHandler,
-		distrclient.ProposalHandler,
+		//distrclient.ProposalHandler,
 		upgradeclient.LegacyProposalHandler,
 		upgradeclient.LegacyCancelProposalHandler,
 		ibcclientclient.UpdateClientProposalHandler,
@@ -160,6 +163,8 @@ func getGovProposalHandlers() []govclient.ProposalHandler {
 }
 
 var (
+	Upgrades = []upgrades.Upgrade{v098.Upgrade}
+	
 	// DefaultNodeHome default home directories for the application daemon
 	DefaultNodeHome string
 
@@ -251,6 +256,8 @@ type App struct {
 	ParamsKeeper     paramskeeper.Keeper
 	IBCKeeper        *ibckeeper.Keeper // IBC Keeper must be a pointer in the app, so we can SetRouter on it correctly
 	EvidenceKeeper   evidencekeeper.Keeper
+	ConsensusParamsKeeper consensusparamkeeper.Keeper
+
 	TransferKeeper   ibctransferkeeper.Keeper
 	ICAHostKeeper    icahostkeeper.Keeper
 	FeeGrantKeeper   feegrantkeeper.Keeper
@@ -333,7 +340,7 @@ func New(
 	// set the BaseApp's parameter store
 	//bApp.SetParamStore(app.ParamsKeeper.Subspace(baseapp.Paramspace).WithKeyTable(paramstypes.ConsensusParamsKeyTable()))
 	
-	app.ConsensusParamsKeeper = consensusparamkeeper.NewKeeper(appCodec, keys[consensusparamstypes.StoreKey], authtypes.NewModuleAddress(govtypes.ModuleName).String())
+	app.ConsensusParamsKeeper = consensusparamkeeper.NewKeeper(appCodec, keys[consensusparamtypes.StoreKey], authtypes.NewModuleAddress(govtypes.ModuleName).String())
 	bApp.SetParamStore(&app.ConsensusParamsKeeper)
 
 
@@ -501,6 +508,14 @@ func New(
 	icaHostIBCModule := icahost.NewIBCModule(app.ICAHostKeeper)
 
 	// Create evidence Keeper for to register the IBC light client misbehaviour evidence route
+	app.FeeburnKeeper = *feeburnmodulekeeper.NewKeeper(
+                appCodec,
+                keys[feeburnmoduletypes.StoreKey],
+                keys[feeburnmoduletypes.MemStoreKey],
+                authtypes.NewModuleAddress(govtypes.ModuleName),
+        )
+
+
 	evidenceKeeper := evidencekeeper.NewKeeper(
 		appCodec,
 		keys[evidencetypes.StoreKey],
@@ -530,16 +545,9 @@ func New(
 		govConfig,
 	)
 	
-  })
 	
 
 
-	app.FeeburnKeeper = *feeburnmodulekeeper.NewKeeper(
-		appCodec,
-		keys[feeburnmoduletypes.StoreKey],
-		keys[feeburnmoduletypes.MemStoreKey],
-		authtypes.NewModuleAddress(govtypes.ModuleName),
-	)
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
 	// Sealing prevents other modules from creating scoped sub-keepers
@@ -693,6 +701,8 @@ func New(
 	}
 	reflectionv1.RegisterReflectionServiceServer(app.GRPCQueryRouter(), reflectionSvc)
 
+	
+	
 
 	// create the simulation manager and define the order of the modules for deterministic simulations
 	app.sm = module.NewSimulationManager(
@@ -922,8 +932,8 @@ func (app *App) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig
 	ModuleBasics.RegisterGRPCGatewayRoutes(clientCtx, apiSvr.GRPCGatewayRouter)
 
 	// register app's OpenAPI routes.
-	apiSvr.Router.Handle("/static/openapi.yml", http.FileServer(http.FS(docs.Docs)))
-	apiSvr.Router.HandleFunc("/", openapiconsole.Handler(Name, "/static/openapi.yml"))
+	//apiSvr.Router.Handle("/static/openapi.yml", http.FileServer(http.FS(docs.Docs)))
+	//apiSvr.Router.HandleFunc("/", openapiconsole.Handler(Name, "/static/openapi.yml"))
 }
 
 // RegisterTxService implements the Application.RegisterTxService method.
@@ -939,6 +949,10 @@ func (app *App) RegisterTendermintService(clientCtx client.Context) {
 		app.interfaceRegistry,
 		app.Query,
 	)
+}
+
+func (app *App) RegisterNodeService(clientCtx client.Context) {
+	nodeservice.RegisterNodeService(clientCtx, app.GRPCQueryRouter())
 }
 
 // GetMaccPerms returns a copy of the module account permissions

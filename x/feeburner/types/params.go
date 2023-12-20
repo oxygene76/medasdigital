@@ -7,7 +7,7 @@ import (
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"gopkg.in/yaml.v2"
 
-	"medasdigital/app/params"
+	"github.com/oxygene76/medasdigital/app/params"
 )
 
 var _ paramtypes.ParamSet = (*Params)(nil)

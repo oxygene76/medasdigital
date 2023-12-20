@@ -3,7 +3,7 @@ package cmd
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"medasdigital/app"
+	"github.com/oxygene76/medasdigital/app"
 )
 
 func initSDKConfig() {

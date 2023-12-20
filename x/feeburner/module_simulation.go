@@ -8,9 +8,9 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
 
-	"medasdigital/testutil/feeburner/sample"
-	feeburnersimulation "medasdigital/x/feeburner/simulation"
-	"medasdigital/x/feeburner/types"
+	"github.com/oxygene76/medasdigital/testutil/feeburner/sample"
+	feeburnersimulation "github.com/oxygene76/medasdigital/x/feeburner/simulation"
+	"github.com/oxygene76/medasdigital/x/feeburner/types"
 )
 
 // avoid unused import issue

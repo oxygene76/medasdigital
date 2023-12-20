@@ -2,8 +2,8 @@ package feeburner
 
 import (
 	errorsmod "cosmossdk.io/errors"
-	"medasdigital/x/feeburner/keeper"
-	"medasdigital/x/feeburner/types"
+	"github.com/oxygene76/medasdigital/x/feeburner/keeper"
+	"github.com/oxygene76/medasdigital/x/feeburner/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 

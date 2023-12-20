@@ -3,14 +3,14 @@ package types_test
 import (
 	"testing"
 
-	"medasdigital/app"
+	"github.com/oxygene76/medasdigital/app"
 
 	"github.com/stretchr/testify/require"
 
-	keepertest "medasdigital/testutil/feeburner/keeper"
-	"medasdigital/testutil/feeburner/nullify"
-	"medasdigital/x/feeburner"
-	"medasdigital/x/feeburner/types"
+	keepertest "github.com/oxygene76/medasdigital/testutil/feeburner/keeper"
+	"github.com/oxygene76/medasdigital/testutil/feeburner/nullify"
+	"github.com/oxygene76/medasdigital/x/feeburner"
+	"github.com/oxygene76/medasdigital/x/feeburner/types"
 )
 
 func TestGenesis(t *testing.T) {
@@ -41,10 +41,10 @@ func TestGenesisState_Validate(t *testing.T) {
 			valid:    true,
 		},
 		{
-			desc: "empty neutron denom",
+			desc: "empty medas denom",
 			genState: &types.GenesisState{
 				Params: types.Params{
-					NeutronDenom: "",
+					MedasDenom: "",
 				},
 			},
 			valid: false,

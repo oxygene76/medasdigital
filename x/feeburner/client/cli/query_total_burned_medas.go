@@ -7,7 +7,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/spf13/cobra"
 
-	"medasdigital/x/feeburner/types"
+	"github.com/oxygene76/medasdigital/x/feeburner/types"
 )
 
 func CmdQueryTotalBurnedMedasAmount() *cobra.Command {
@@ -20,7 +20,7 @@ func CmdQueryTotalBurnedMedasAmount() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			res, err := queryClient.TotalBurnedMedassAmount(context.Background(), &types.QueryTotalBurnedMedasAmountRequest{})
+			res, err := queryClient.TotalBurnedMedasAmount(context.Background(), &types.QueryTotalBurnedMedasAmountRequest{})
 			if err != nil {
 				return err
 			}
