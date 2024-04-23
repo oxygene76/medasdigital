@@ -1,5 +1,39 @@
+
 # medasdigital
 **medasdigital** is a blockchain built using Cosmos SDK and Tendermint and created with [Ignite CLI](https://ignite.com/cli).
+
+Medasdigital is intended for future digital instantly payment purposes and tokenization of our company assets. We are runnin
+g multiple validators and am planning rewards for delegators. Right now there is Sentinel, Mars, Bitcanna, Chihuahua and Fet
+chAi (inactive)
+
+We also host a Akash Providee Node
+
+
+## technical Info
+
+LCD
+https://lcd.medas-digital.io:1317
+
+RPC
+https://rpc.medas-digital.io:26657
+
+We cuurently have 5 own Validators running in 3 different datacenters
+
+Uranus
+Neptun
+Jupiter
+Mars
+Saturn
+
+Medas Digital Token is listed on Osmosis and integrated in Keplr Community Chain, we have to ressurect IBC Channel to Osmosis soon.
+
+Unfortunately we had to do a hard fork to cosmos sdk v0.50, exporting the current state, but so old blockchain information is no longer present but the balances are.
+
+For more technical visit our chain-registration at cosmos
+https://github.com/cosmos/chain-registry/blob/master/medasdigital/chain.json
+
+If anybody is interested supportig in DEV for the cosmos sdk we would be thankful. We are mainly infrastructure specialists.
+
 
 ## Get started
 
