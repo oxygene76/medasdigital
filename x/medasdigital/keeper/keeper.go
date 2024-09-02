@@ -9,6 +9,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"medasdigital/x/medasdigital/types"
+	"medasdigital/x/medasdigital/notifier" 
+
 )
 
 type (
@@ -20,6 +22,7 @@ type (
 		// the address capable of executing a MsgUpdateParams message. Typically, this
 		// should be the x/gov module account.
 		authority string
+	 	emailNotifier *notifier.EmailNotifier 	
 	}
 )
 
@@ -28,6 +31,7 @@ func NewKeeper(
 	storeService store.KVStoreService,
 	logger log.Logger,
 	authority string,
+	emailNotifier *notifier.EmailNotifier, // Neues Feld für den EmailNotifier
 
 ) Keeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
@@ -39,6 +43,7 @@ func NewKeeper(
 		storeService: storeService,
 		authority:    authority,
 		logger:       logger,
+		emailNotifier: emailNotifier,
 	}
 }
 
@@ -50,4 +55,7 @@ func (k Keeper) GetAuthority() string {
 // Logger returns a module-specific logger.
 func (k Keeper) Logger() log.Logger {
 	return k.logger.With("module", fmt.Sprintf("x/%s", types.ModuleName))
+}
+func (k Keeper) NotifyOnDeposit(ctx sdk.Context, address string, amount sdk.Coins) {
+    k.emailNotifier.NotifyOnDeposit(ctx, address, amount) // Verwende den emailNotifier
 }

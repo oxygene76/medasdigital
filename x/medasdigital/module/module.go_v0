@@ -19,7 +19,6 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 
 	// this line is used by starport scaffolding # 1
-	"medasdigital/x/medasdigital/notifier"
 
 	modulev1 "medasdigital/api/medasdigital/medasdigital/module"
 	"medasdigital/x/medasdigital/keeper"
@@ -67,7 +66,7 @@ func (a AppModuleBasic) RegisterInterfaces(reg cdctypes.InterfaceRegistry) {
 }
 
 // DefaultGenesis returns a default GenesisState for the module, marshalled to json.RawMessage.
-// The default GenesisState need to be defined by the module developer and is primarily used for testing.
+// The default GenesisState needs to be defined by the module developer and is primarily used for testing.
 func (AppModuleBasic) DefaultGenesis(cdc codec.JSONCodec) json.RawMessage {
 	return cdc.MustMarshalJSON(types.DefaultGenesis())
 }
@@ -139,20 +138,22 @@ func (am AppModule) ExportGenesis(ctx sdk.Context, cdc codec.JSONCodec) json.Raw
 	return cdc.MustMarshalJSON(genState)
 }
 
-// ConsensusVersion is a sequence number for state-breaking change of the module.
+// ConsensusVersion is a sequence number for state-breaking changes of the module.
 // It should be incremented on each consensus-breaking change introduced by the module.
 // To avoid wrong/empty versions, the initial version should be set to 1.
 func (AppModule) ConsensusVersion() uint64 { return 1 }
 
 // BeginBlock contains the logic that is automatically triggered at the beginning of each block.
-// The begin block implementation is optional.
-func (am AppModule) BeginBlock(_ context.Context) error {
+// Anpassung der Signatur, um `context.Context` und `error` zu verwenden, wie von `appmodule.HasBeginBlocker` erwartet.
+func (am AppModule) BeginBlock(ctx context.Context) error {
+	// Hier kannst du deine BeginBlock-Logik hinzufügen
 	return nil
 }
 
 // EndBlock contains the logic that is automatically triggered at the end of each block.
-// The end block implementation is optional.
-func (am AppModule) EndBlock(_ context.Context) error {
+// Anpassung der Signatur, um `context.Context` und `error` zu verwenden, wie von `appmodule.HasEndBlocker` erwartet.
+func (am AppModule) EndBlock(ctx context.Context) error {
+	// Hier kannst du deine EndBlock-Logik hinzufügen
 	return nil
 }
 
@@ -193,51 +194,24 @@ type ModuleOutputs struct {
 }
 
 func ProvideModule(in ModuleInputs) ModuleOutputs {
-        // default to governance authority if not provided
-        authority := authtypes.NewModuleAddress(govtypes.ModuleName)
-        if in.Config.Authority != "" {
-                authority = authtypes.NewModuleAddressOrBech32Address(in.Config.Authority)
-        }
+	// default to governance authority if not provided
+	authority := authtypes.NewModuleAddress(govtypes.ModuleName)
+	if in.Config.Authority != "" {
+		authority = authtypes.NewModuleAddressOrBech32Address(in.Config.Authority)
+	}
+	k := keeper.NewKeeper(
+		in.Cdc,
+		in.StoreService,
+		in.Logger,
+		authority.String(),
+	)
+	m := NewAppModule(
+		in.Cdc,
+		k,
+		in.AccountKeeper,
+		in.BankKeeper,
+	)
 
-        // Erstelle eine neue Instanz von EmailNotifier
-        emailNotifier := notifier.NewEmailNotifier(in.Logger)
-
-        k := keeper.NewKeeper(
-                in.Cdc,
-                in.StoreService,
-                in.Logger,
-                authority.String(),
-                emailNotifier, // Übergabe des EmailNotifier
-        )
-        
-        m := NewAppModule(
-                in.Cdc,
-                k,
-                in.AccountKeeper,
-                in.BankKeeper,
-        )
-
-        return ModuleOutputs{MedasdigitalKeeper: k, Module: m}
+	return ModuleOutputs{MedasdigitalKeeper: k, Module: m}
 }
 
-//func ProvideModule(in ModuleInputs) ModuleOutputs {
-//	// default to governance authority if not provided
-//	authority := authtypes.NewModuleAddress(govtypes.ModuleName)
-//	if in.Config.Authority != "" {
-//		authority = authtypes.NewModuleAddressOrBech32Address(in.Config.Authority)
-//	}
-//	k := keeper.NewKeeper(
-//		in.Cdc,
-//		in.StoreService,
-//		in.Logger,
-//		authority.String(),
-//	)
-//	m := NewAppModule(
-//		in.Cdc,
-//		k,
-//		in.AccountKeeper,
-//		in.BankKeeper,
-//	)
-//
-//	return ModuleOutputs{MedasdigitalKeeper: k, Module: m}
-//}
