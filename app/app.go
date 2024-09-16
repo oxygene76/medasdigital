@@ -1,10 +1,11 @@
 package app
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
-
+	"context"
 	"cosmossdk.io/depinject"
 	"cosmossdk.io/log"
 	storetypes "cosmossdk.io/store/types"
@@ -13,6 +14,7 @@ import (
 	feegrantkeeper "cosmossdk.io/x/feegrant/keeper"
 	upgradekeeper "cosmossdk.io/x/upgrade/keeper"
 	dbm "github.com/cosmos/cosmos-db"
+	abci "github.com/cometbft/cometbft/abci/types"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -21,6 +23,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/server"
 	"github.com/cosmos/cosmos-sdk/server/api"
 	"github.com/cosmos/cosmos-sdk/server/config"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	testdata_pulsar "github.com/cosmos/cosmos-sdk/testutil/testdata/testpb"
 	"github.com/cosmos/cosmos-sdk/types/module"
@@ -52,6 +55,9 @@ import (
 	ibcfeekeeper "github.com/cosmos/ibc-go/v8/modules/apps/29-fee/keeper"
 	ibctransferkeeper "github.com/cosmos/ibc-go/v8/modules/apps/transfer/keeper"
 	ibckeeper "github.com/cosmos/ibc-go/v8/modules/core/keeper"
+	upgradetypes "cosmossdk.io/x/upgrade/types"
+	capabilitytypes "github.com/cosmos/ibc-go/modules/capability/types"
+
 
 	medasdigitalmodulekeeper "medasdigital/x/medasdigital/keeper"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
@@ -60,6 +66,9 @@ import (
 )
 
 const (
+	Bech32Prefix = "medas"
+	UpgradeName  = "v0.99c"
+	NodeDir      = ".medasdigital"
 	AccountAddressPrefix = "medas"
 	Name                 = "medasdigital"
 )
@@ -83,7 +92,8 @@ type App struct {
 	appCodec          codec.Codec
 	txConfig          client.TxConfig
 	interfaceRegistry codectypes.InterfaceRegistry
-
+	
+	configurator module.Configurator
 	// keepers
 	AccountKeeper         authkeeper.AccountKeeper
 	BankKeeper            bankkeeper.Keeper
@@ -118,10 +128,13 @@ type App struct {
 
 	MedasdigitalKeeper medasdigitalmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
+	
 
+	// the module manager
+	// mm *module.Manager
 	// simulation manager
 	sm *module.SimulationManager
-}
+}	
 
 func init() {
 	userHomeDir, err := os.UserHomeDir()
@@ -320,16 +333,80 @@ func New(
 
 	app.sm.RegisterStoreDecoders()
 
-	// A custom InitChainer can be set if extra pre-init-genesis logic is required.
-	// By default, when using app wiring enabled module, this is not required.
-	// For instance, the upgrade module will set automatically the module version map in its init genesis thanks to app wiring.
-	// However, when registering a module manually (i.e. that does not support app wiring), the module version map
-	// must be set manually as follow. The upgrade module will de-duplicate the module version map.
-	//
-	// app.SetInitChainer(func(ctx sdk.Context, req *abci.RequestInitChain) (*abci.ResponseInitChain, error) {
-	// 	app.UpgradeKeeper.SetModuleVersionMap(ctx, app.ModuleManager.GetVersionMap())
-	// 	return app.App.InitChainer(ctx, req)
-	// })
+	// A custom InitChainer sets if extra pre-init-genesis logic is required.
+	// This is necessary for manually registered modules that do not support app wiring.
+        // Manually set the module version map as shown below.
+	// The upgrade module will automatically handle de-duplication of the module version map.
+	app.SetInitChainer(func(ctx sdk.Context, req *abci.RequestInitChain) (*abci.ResponseInitChain, error) {
+		
+		fmt.Println("Setting ModuleVersionMap")
+		 ctx.Logger().Info("InitChainer called")
+    // Hole die Modulversionen aus der ModuleVersionMap
+    versionMap := app.ModuleManager.GetVersionMap()
+
+    // Prüfe, ob das Capability-Modul in der Version Map ist und logge die Version
+    if version, ok := versionMap[capabilitytypes.ModuleName]; ok {
+        fmt.Printf("Capability module version: %d\n", version)
+    } else {
+        fmt.Println("Capability module version not found in VersionMap")
+    }
+		fmt.Println("Setting ModuleVersionMap")
+		if err := app.UpgradeKeeper.SetModuleVersionMap(ctx, app.ModuleManager.GetVersionMap()); err != nil {
+			return nil, err
+		}
+		fmt.Println("ModuleVersionMap set successfully")
+		return app.App.InitChainer(ctx, req)
+	})
+	
+	// this configures a no-op upgrade handler for the "my-fancy-upgrade" upgrade
+	// this configures a no-op upgrade handler for the "my-fancy-upgrade" upgrade
+	//app.UpgradeKeeper.SetUpgradeHandler("v0.99c", func(ctx context.Context, plan upgradetypes.Plan) {
+	 // upgrade changes here
+	//})
+
+	// RegisterUpgradeHandlers returns upgrade handlers
+	// upgrade handlers
+	app.configurator = module.NewConfigurator(app.appCodec, app.MsgServiceRouter(), app.GRPCQueryRouter())
+	app.RegisterUpgradeHandlers(app.configurator)
+
+
+	upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
+	if err != nil {
+		//panic (err)// handle error
+	}
+	if upgradeInfo.Name == "v0.99c" && !app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
+	 storeUpgrades := storetypes.StoreUpgrades{
+		        Added: []string{
+				//alliancemoduletypes.StoreKey,
+				//ibchookstypes.StoreKey,
+				//tokenfactorytypes.ModuleName,
+				//liquiditytypes.ModuleName,
+				//circuittypes.ModuleName,
+			},
+			Deleted: []string{
+			},
+			
+			}
+
+	 
+	 // configure store loader that checks if version == upgradeHeight and applies store upgrades
+	 app.SetStoreLoader(upgradetypes.UpgradeStoreLoader(upgradeInfo.Height, &storeUpgrades))
+	}
+
+
+	//if upgradeInfo.Name == UpgradeName && !app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
+	//	storeUpgrades := storetypes.StoreUpgrades{
+	//		Added: []string{
+				//alliancemoduletypes.StoreKey,
+				//ibchookstypes.StoreKey,
+				//tokenfactorytypes.ModuleName,
+				//liquiditytypes.ModuleName,
+	//		},
+	//	}
+
+		// configure store loader that checks if version == upgradeHeight and applies store upgrades
+	//	app.SetStoreLoader(upgradetypes.UpgradeStoreLoader(upgradeInfo.Height, &storeUpgrades))
+	//}
 
 	if err := app.Load(loadLatest); err != nil {
 		return nil, err
@@ -337,7 +414,6 @@ func New(
 
 	return app, nil
 }
-
 // LegacyAmino returns App's amino codec.
 //
 // NOTE: This is solely to be used for testing purposes as it may be desirable
@@ -443,4 +519,63 @@ func BlockedAddresses() map[string]bool {
 		}
 	}
 	return result
+}
+// RegisterUpgradeHandlers returns upgrade handlers
+func (app *App) RegisterUpgradeHandlers(cfg module.Configurator) {
+	app.UpgradeKeeper.SetUpgradeHandler("v0.99c", func(ctx context.Context, plan upgradetypes.Plan, vm module.VersionMap) (module.VersionMap, error)  {
+		
+	sdkCtx := sdk.UnwrapSDKContext(ctx)
+
+        sdkCtx.Logger().Info("UpgradeHandler called for v0.99c")
+
+        // Plan-Überprüfung und Logging
+        if plan.Name == "" {
+            sdkCtx.Logger().Error("Upgrade plan name is empty")
+            return nil, fmt.Errorf("upgrade plan name is empty")
+        }
+
+        if app.ModuleManager == nil {
+            sdkCtx.Logger().Error("Module manager is not initialized")
+            return nil, fmt.Errorf("module manager is not initialized")
+        }
+
+        if vm == nil {
+            sdkCtx.Logger().Error("Version map is not initialized")
+            return nil, fmt.Errorf("version map is not initialized")
+        }
+
+        // Setze die Capability-Modul-Version, falls sie nicht vorhanden ist
+        if _, ok := vm[capabilitytypes.ModuleName]; !ok {
+            sdkCtx.Logger().Info("Setting Capability module version manually in VersionMap")
+            vm[capabilitytypes.ModuleName] = 1 // Setze die Version manuell (z.B. Version 1)
+        }
+
+        // Führe die Migrationen durch
+        vm, err := app.ModuleManager.RunMigrations(ctx, cfg, vm)
+        if err != nil {
+            sdkCtx.Logger().Error("Error running migrations", "error", err)
+            return nil, err
+        }
+
+        sdkCtx.Logger().Info("UpgradeHandler finished successfully for v0.99c")
+
+        return vm, nil
+
+
+//		if plan.Name == "" {
+ //		   return nil, fmt.Errorf("upgrade plan name is empty")
+//		}
+
+//		if app.ModuleManager == nil {
+//	    		return nil, fmt.Errorf("module manager is not initialized")
+//		}
+
+//		if vm == nil {
+  //  			return nil, fmt.Errorf("version map is not initialized")
+//		}
+
+
+//		vm, err := app.ModuleManager.RunMigrations(ctx, cfg, vm)
+//		return vm,err 
+	})
 }

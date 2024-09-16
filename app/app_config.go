@@ -163,7 +163,6 @@ var (
 		upgradetypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/preBlockers
 	}
-
 	// module account permissions
 	moduleAccPerms = []*authmodulev1.ModuleAccountPermission{
 		{Account: authtypes.FeeCollectorName},
